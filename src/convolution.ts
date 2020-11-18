@@ -1,18 +1,10 @@
 import { Pixel, PixelImage } from "./pixel-image";
 
+export type Kernel = number[][];
+
 export class Convolution {
 
-    private kernel: number[][];
-
-    constructor() {
-        this.kernel = [
-            [1, 4, 6, 4, 1],
-            [4, 16, 24, 16, 4],
-            [6, 24, 36, 24, 6],
-            [4, 16, 24, 16, 4],
-            [1, 4, 6, 4, 1],
-        ];
-    }
+    constructor(private kernel: Kernel) { }
 
     private getPixelForKernelElement(pixelImage: PixelImage, x: number, y: number, m: number, n: number) {
         return pixelImage.getPixel(
@@ -43,6 +35,6 @@ export class Convolution {
     apply(pixelImage: PixelImage) {
         const clonedPixelImage = pixelImage.clone();
         pixelImage.each((_, x, y) => this.applyKernelOnPixel(clonedPixelImage, x, y));
-        return pixelImage.getImageData();
+        return pixelImage;
     }
 }

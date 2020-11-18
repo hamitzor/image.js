@@ -1,3 +1,5 @@
+import { Convolution, Kernel } from "./convolution";
+
 export interface Pixel { r: number, g: number, b: number }
 
 export class PixelImage {
@@ -27,6 +29,7 @@ export class PixelImage {
                 }
             }
         }
+        return this;
     }
 
     makeGrayscale() {
@@ -34,6 +37,7 @@ export class PixelImage {
             const average = (r + g + b) / 3;
             return { r: average, g: average, b: average };
         });
+        return this;
     }
 
     getPixel(x: number, y: number) {
@@ -50,5 +54,9 @@ export class PixelImage {
         this.imageData.data[i] = pixel.r;
         this.imageData.data[i + 1] = pixel.g;
         this.imageData.data[i + 2] = pixel.b;
+    }
+
+    convolution(kernel: Kernel | Convolution, count = 1) {
+        return Array.from(Array(count).keys()).reduce((acc) => (kernel instanceof Convolution ? kernel : new Convolution(kernel)).apply(acc), this);
     }
 }

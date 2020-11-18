@@ -64,7 +64,19 @@ class Analyser {
 
         els.gaussianBlur.onclick = () => {
             const imageData = this.getImageDate(els.input);
-            this.renderImage(els.output, new Convolution().apply(new PixelImage(imageData)));
+            this.renderImage(els.output, new PixelImage(imageData).makeGrayscale()
+                .convolution([
+                    [1, 4, 6, 4, 1],
+                    [4, 16, 24, 16, 4],
+                    [6, 24, 36, 24, 6],
+                    [4, 16, 24, 16, 4],
+                    [1, 4, 6, 4, 1],
+                ], 4)
+                .convolution([
+                    [1, 0, -1],
+                    [2, 0, -2],
+                    [1, 0, -1]
+                ]));
         };
     }
 
@@ -84,14 +96,14 @@ class Analyser {
     }
 
     private renderImage(canvas: HTMLCanvasElement, img: HTMLImageElement): void;
-    private renderImage(canvas: HTMLCanvasElement, img: ImageData): void;
+    private renderImage(canvas: HTMLCanvasElement, img: PixelImage): void;
     private renderImage(canvas: HTMLCanvasElement, img: any) {
         this.clearCanvas(canvas);
         const ctx = canvas.getContext('2d')!;
         const dx = (CANVAS_SIZE - this.imageWidth) / 2;
         const dy = (CANVAS_SIZE - this.imageHeight) / 2;
-        if (img instanceof ImageData) {
-            ctx.putImageData(img, dx, dy);
+        if (img instanceof PixelImage) {
+            ctx.putImageData(img.getImageData(), dx, dy);
         } else if (img instanceof HTMLImageElement) {
             ctx.drawImage(img, dx, dy, this.imageWidth, this.imageHeight);
         }
