@@ -28,6 +28,9 @@ class Analyser {
         [els.input, els.output].forEach(canvas => {
             canvas.width = CANVAS_SIZE;
             canvas.height = CANVAS_SIZE;
+            canvas.onwheel = e => {
+                canvas.getContext('2d')?.scale(2, 2);
+            }
             this.clearCanvas(canvas);
         });
 
@@ -64,19 +67,21 @@ class Analyser {
 
         els.gaussianBlur.onclick = () => {
             const imageData = this.getImageDate(els.input);
-            this.renderImage(els.output, new PixelImage(imageData).makeGrayscale()
-                .convolution([
-                    [1, 4, 6, 4, 1],
-                    [4, 16, 24, 16, 4],
-                    [6, 24, 36, 24, 6],
-                    [4, 16, 24, 16, 4],
-                    [1, 4, 6, 4, 1],
-                ], 4)
-                .convolution([
-                    [1, 0, -1],
-                    [2, 0, -2],
-                    [1, 0, -1]
-                ]));
+            this.renderImage(
+                els.output,
+                new PixelImage(imageData)
+                    .makeGrayscale()
+                    .convolution(new Convolution([
+                        [1, 2, 2],
+                        [2, 4, 2],
+                        [1, 2, 1]
+                    ], { normalize: true, repeat: 10 }))
+                    .convolution(new Convolution([
+                        [1, 0, -1],
+                        [2, 0, -2],
+                        [1, 0, -1]
+                    ]))
+            );
         };
     }
 
@@ -103,7 +108,7 @@ class Analyser {
         const dx = (CANVAS_SIZE - this.imageWidth) / 2;
         const dy = (CANVAS_SIZE - this.imageHeight) / 2;
         if (img instanceof PixelImage) {
-            ctx.putImageData(img.getImageData(), dx, dy);
+            ctx.putImageData(img.imageData, dx, dy);
         } else if (img instanceof HTMLImageElement) {
             ctx.drawImage(img, dx, dy, this.imageWidth, this.imageHeight);
         }
