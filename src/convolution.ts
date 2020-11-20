@@ -5,11 +5,13 @@ export type Kernel = number[][];
 export interface ConvolutionOpts {
     repeat?: number;
     normalize?: boolean;
+    factor?: number;
 }
 
 const DEFAULT_OPTS: ConvolutionOpts = {
     repeat: 1,
-    normalize: false
+    normalize: false,
+    factor: 1
 };
 
 export class Convolution {
@@ -19,7 +21,7 @@ export class Convolution {
     constructor(public kernel: Kernel, private opts?: ConvolutionOpts) {
         this.opts = Object.assign(Object.assign({}, DEFAULT_OPTS), opts);
         if (this.opts.normalize) {
-            this.sumOfWeights = this.kernel.reduce((acc, row) => row.reduce((_acc, val) => _acc + val, 0) + acc, 0);
+            this.sumOfWeights = this.kernel.reduce((acc, row) => row.reduce((_acc, val) => _acc + val * this.opts?.factor!, 0) + acc, 0);
         }
     }
 
@@ -32,9 +34,9 @@ export class Convolution {
                         x - ((this.kernel.length - 1) / 2 - m),
                         y - ((this.kernel.length - 1) / 2 - n)
                     );
-                    res.r += neighbourPixel.r * this.kernel[m][n];
-                    res.g += neighbourPixel.g * this.kernel[m][n];
-                    res.b += neighbourPixel.b * this.kernel[m][n];
+                    res.r += neighbourPixel.r * this.kernel[m][n] * this.opts?.factor!;
+                    res.g += neighbourPixel.g * this.kernel[m][n] * this.opts?.factor!;
+                    res.b += neighbourPixel.b * this.kernel[m][n] * this.opts?.factor!;
                 }
             }
             if (this.opts!.normalize) {
@@ -48,10 +50,10 @@ export class Convolution {
 
     apply(pixelImage: PixelImage) {
         const _apply = (_pixelImage: PixelImage) => {
-            const result = new PixelImage(pixelImage.width, pixelImage.height);
-            result.each((_, x, y) => this.applyKernelOnPixel(_pixelImage, x, y));
-            return result;
+            const clone = _pixelImage.clone();
+            _pixelImage.each((_, x, y) => this.applyKernelOnPixel(clone, x, y));
+            return _pixelImage;
         };
-        return Array.from(Array(this.opts?.repeat).keys()).reduce(acc => _apply(acc), pixelImage);
+        return Array.from(Array(this.opts?.repeat!).keys()).reduce(acc => _apply(acc), pixelImage);
     }
 }

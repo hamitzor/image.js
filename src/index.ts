@@ -67,20 +67,24 @@ class Analyser {
 
         ELS.gaussianBlur.onclick = () => {
             const imageData = this.getImageDate(ELS.input);
+
+            const grayImage = new PixelImage(imageData).makeGrayscale();
+
             this.renderImage(
                 ELS.output,
-                new PixelImage(imageData)
-                    .makeGrayscale()
-                    .convolution(new Convolution([
-                        [1, 2, 2],
-                        [2, 4, 2],
-                        [1, 2, 1]
-                    ], { normalize: true, repeat: 3 }))
+                grayImage
+                    .clone()
                     .convolution(new Convolution([
                         [1, 0, -1],
                         [2, 0, -2],
                         [1, 0, -1]
-                    ]))
+                    ], { factor: 1 }))
+                    .add(grayImage.convolution(new Convolution([
+                        [1, 2, 1],
+                        [0, 0, 0],
+                        [-1, -2, -1]
+                    ], { factor: 1 })))
+
             );
         };
     }
