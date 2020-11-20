@@ -1,7 +1,7 @@
 import { Convolution } from "./convolution";
 import { PixelImage } from "./pixel-image";
 
-const els: {
+const ELS: {
     app: HTMLDivElement,
     input: HTMLCanvasElement,
     output: HTMLCanvasElement,
@@ -25,7 +25,7 @@ class Analyser {
     private imageHeight: number;
 
     constructor() {
-        [els.input, els.output].forEach(canvas => {
+        [ELS.input, ELS.output].forEach(canvas => {
             canvas.width = CANVAS_SIZE;
             canvas.height = CANVAS_SIZE;
             canvas.onwheel = e => {
@@ -34,12 +34,12 @@ class Analyser {
             this.clearCanvas(canvas);
         });
 
-        els.loadImage.onclick = () => {
-            els.imageInput.click();
+        ELS.loadImage.onclick = () => {
+            ELS.imageInput.click();
         };
 
-        els.imageInput.onchange = () => {
-            const file = els.imageInput.files?.[0];
+        ELS.imageInput.onchange = () => {
+            const file = ELS.imageInput.files?.[0];
             const fileReader = new FileReader();
             fileReader.readAsDataURL(file!);
             fileReader.onload = () => {
@@ -58,24 +58,24 @@ class Analyser {
                             this.imageHeight = CANVAS_SIZE;
                         }
                     }
-                    this.renderImage(els.input, img);
-                    els.imageInput.value = '';
+                    this.renderImage(ELS.input, img);
+                    ELS.imageInput.value = '';
                 };
             };
         };
 
 
-        els.gaussianBlur.onclick = () => {
-            const imageData = this.getImageDate(els.input);
+        ELS.gaussianBlur.onclick = () => {
+            const imageData = this.getImageDate(ELS.input);
             this.renderImage(
-                els.output,
+                ELS.output,
                 new PixelImage(imageData)
                     .makeGrayscale()
                     .convolution(new Convolution([
                         [1, 2, 2],
                         [2, 4, 2],
                         [1, 2, 1]
-                    ], { normalize: true, repeat: 10 }))
+                    ], { normalize: true, repeat: 3 }))
                     .convolution(new Convolution([
                         [1, 0, -1],
                         [2, 0, -2],
@@ -116,10 +116,10 @@ class Analyser {
 }
 
 const main = () => {
-    new Analyser();
+    (window as any).ELS = ELS;
+    (window as any).PixelImage = PixelImage;
+    (window as any).Convolution = Convolution;
+    (window as any).analyser = new Analyser();
 };
-
-
-
 
 document.addEventListener("DOMContentLoaded", main);

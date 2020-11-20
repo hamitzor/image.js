@@ -17,7 +17,7 @@ export class Convolution {
     private sumOfWeights: number;
 
     constructor(public kernel: Kernel, private opts?: ConvolutionOpts) {
-        this.opts = Object.assign(DEFAULT_OPTS, opts);
+        this.opts = Object.assign(Object.assign({}, DEFAULT_OPTS), opts);
         if (this.opts.normalize) {
             this.sumOfWeights = this.kernel.reduce((acc, row) => row.reduce((_acc, val) => _acc + val, 0) + acc, 0);
         }
@@ -48,13 +48,10 @@ export class Convolution {
 
     apply(pixelImage: PixelImage) {
         const _apply = (_pixelImage: PixelImage) => {
-            const cloned = _pixelImage.clone();
-            _pixelImage.each((_, x, y) => {
-                return this.applyKernelOnPixel(cloned, x, y);
-            });
-            return _pixelImage;
+            const result = new PixelImage(pixelImage.width, pixelImage.height);
+            result.each((_, x, y) => this.applyKernelOnPixel(_pixelImage, x, y));
+            return result;
         };
-        _apply(pixelImage);
         return Array.from(Array(this.opts?.repeat).keys()).reduce(acc => _apply(acc), pixelImage);
     }
 }

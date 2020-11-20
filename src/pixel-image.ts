@@ -1,26 +1,36 @@
-import { Convolution, Kernel } from "./convolution";
+import { Convolution } from "./convolution";
 
 export interface Pixel { r: number, g: number, b: number }
 
 export class PixelImage {
-    private _imageData: ImageData;
-    constructor(imageData: ImageData) {
-        this._imageData = imageData;
+    public imageData: ImageData;
+    public width: number;
+    public height: number;
+
+    constructor(width: number, height: number);
+    constructor(imageData: ImageData);
+    constructor(arg0: any, arg1?: any) {
+        if (arg0 instanceof ImageData) {
+            this.imageData = arg0;
+        } else {
+            this.imageData = new ImageData(arg0, arg1);
+            for (let i = 0; i < arg0 * arg1; i++) {
+                this.imageData.data[i * 4 + 3] = 255;
+            }
+        }
+        this.width = this.imageData.width;
+        this.height = this.imageData.height;
     }
 
     clone() {
-        const data = new Uint8ClampedArray(this._imageData.width * this._imageData.height * 4);
-        data.set(this._imageData.data, 0);
-        return new PixelImage(new ImageData(data, this._imageData.width, this._imageData.height));
-    }
-
-    get imageData() {
-        return this._imageData;
+        const data = new Uint8ClampedArray(this.imageData.width * this.imageData.height * 4);
+        data.set(this.imageData.data, 0);
+        return new PixelImage(new ImageData(data, this.imageData.width, this.imageData.height));
     }
 
     each(cb: (pixel: Pixel, x: number, y: number) => Pixel | void) {
-        for (let x = 0; x < this._imageData.width; x++) {
-            for (let y = 0; y < this._imageData.height; y++) {
+        for (let x = 0; x < this.imageData.width; x++) {
+            for (let y = 0; y < this.imageData.height; y++) {
                 const out = cb(this.getPixel(x, y), x, y);
                 if (out) {
                     this.setPixel(x, y, out);
@@ -39,19 +49,19 @@ export class PixelImage {
     }
 
     getPixel(x: number, y: number) {
-        const i = (y * this._imageData.width + x) * 4;
+        const i = (y * this.imageData.width + x) * 4;
         return {
-            r: this._imageData.data[i],
-            g: this._imageData.data[i + 1],
-            b: this._imageData.data[i + 2]
+            r: this.imageData.data[i],
+            g: this.imageData.data[i + 1],
+            b: this.imageData.data[i + 2]
         };
     }
 
     setPixel(x: number, y: number, pixel: Pixel) {
-        const i = (y * this._imageData.width + x) * 4;
-        this._imageData.data[i] = pixel.r;
-        this._imageData.data[i + 1] = pixel.g;
-        this._imageData.data[i + 2] = pixel.b;
+        const i = (y * this.imageData.width + x) * 4;
+        this.imageData.data[i] = pixel.r;
+        this.imageData.data[i + 1] = pixel.g;
+        this.imageData.data[i + 2] = pixel.b;
     }
 
     convolution(convolution: Convolution) {
