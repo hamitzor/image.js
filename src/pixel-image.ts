@@ -1,12 +1,5 @@
 import { Convolution } from "./convolution";
-
-class ExtendedImageData extends ImageData {
-    setAlfaToMaximum() {
-        for (let i = 0; i < this.width * this.height; i++) {
-            this.data[i * 4 + 3] = 255;
-        }
-    }
-}
+import { Filter } from "./filter";
 
 export interface Pixel { r: number, g: number, b: number }
 
@@ -21,8 +14,10 @@ export class PixelImage {
         if (arg0 instanceof ImageData) {
             this.imageData = arg0;
         } else {
-            this.imageData = new ExtendedImageData(arg0, arg1);
-            (this.imageData as ExtendedImageData).setAlfaToMaximum();
+            this.imageData = new ImageData(arg0, arg1);
+            for (let i = 0; i < this.width * this.height * 4; i = i + 4) {
+                this.imageData.data[i + 3] = 255;
+            }
         }
         this.width = this.imageData.width;
         this.height = this.imageData.height;
@@ -35,30 +30,33 @@ export class PixelImage {
             data.set(this.imageData.data);
             imageData = new ImageData(data, this.width, this.height);
         } else {
-            imageData = new ExtendedImageData(this.width, this.height);
-            (this.imageData as ExtendedImageData).setAlfaToMaximum();
+            imageData = new ImageData(this.width, this.height);
+            for (let i = 0; i < this.width * this.height * 4; i = i + 4) {
+                imageData.data[i + 3] = 255;
+            }
         }
         return new PixelImage(imageData);
     }
 
     each(cb: (pixel: Pixel, x: number, y: number) => Pixel | void) {
+        const clone = this.clone(true);
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
                 const out = cb(this.getPixel(x, y), x, y);
                 if (out) {
-                    this.setPixel(x, y, out);
+                    clone.setPixel(x, y, out);
                 }
             }
         }
-        return this;
+        return clone;
     }
 
     makeGrayscale() {
-        this.each(({ r, g, b }) => {
-            const average = (r + g + b) / 3;
+        return this.clone(true).each((_, x, y) => {
+            const pixel = this.getPixel(x, y);
+            const average = (pixel.r + pixel.g + pixel.b) / 3;
             return { r: average, g: average, b: average };
         });
-        return this;
     }
 
     getPixel(x: number, y: number) {
@@ -77,22 +75,7 @@ export class PixelImage {
         this.imageData.data[i + 2] = pixel.b;
     }
 
-    convolution(convolution: Convolution) {
-        return convolution.apply(this);
-    }
-
-    add(pixelImage: PixelImage) {
-        this.each((_, x, y) => {
-            if (x < pixelImage.width && y < pixelImage.height) {
-                const pixel0 = this.getPixel(x, y);
-                const pixel1 = pixelImage.getPixel(x, y);
-                return {
-                    r: pixel0.r + pixel1.r,
-                    g: pixel0.g + pixel1.g,
-                    b: pixel0.b + pixel1.b
-                };
-            }
-        });
-        return this;
+    filter(filter: Filter) {
+        return filter.filter(this);
     }
 }

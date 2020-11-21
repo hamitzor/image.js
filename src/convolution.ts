@@ -1,15 +1,12 @@
 import { Pixel, PixelImage } from "./pixel-image";
-
-export type Kernel = number[][];
+import { Matrix } from './matrix';
 
 export interface ConvolutionOpts {
-    repeat?: number;
     normalize?: boolean;
     factor?: number;
 }
 
 const DEFAULT_OPTS: ConvolutionOpts = {
-    repeat: 1,
     normalize: false,
     factor: 1
 };
@@ -17,26 +14,30 @@ const DEFAULT_OPTS: ConvolutionOpts = {
 export class Convolution {
 
     private sumOfWeights: number;
+    public kernel: Matrix;
 
-    constructor(public kernel: Kernel, private opts?: ConvolutionOpts) {
+    constructor(kernel: Matrix | number[][], private opts?: ConvolutionOpts) {
         this.opts = Object.assign(Object.assign({}, DEFAULT_OPTS), opts);
+
+        this.kernel = kernel instanceof Matrix ? kernel : new Matrix(kernel);
+
         if (this.opts.normalize) {
-            this.sumOfWeights = this.kernel.reduce((acc, row) => row.reduce((_acc, val) => _acc + val * this.opts?.factor!, 0) + acc, 0);
+            this.sumOfWeights = this.kernel.data.reduce((acc, row) => row.reduce((_acc, val) => _acc + val * this.opts?.factor!, 0) + acc, 0);
         }
     }
 
-    private applyKernelOnPixel(pixelImage: PixelImage, x: number, y: number) {
+    apply(pixelImage: PixelImage, x: number, y: number) {
         if (x > 0 && y > 0 && x < pixelImage.imageData.width - 1 && y < pixelImage.imageData.height - 1) {
             let res: Pixel = { r: 0, g: 0, b: 0 };
-            for (let m = 0; m < this.kernel.length; m++) {
-                for (let n = 0; n < this.kernel.length; n++) {
+            for (let m = 0; m < this.kernel.data.length; m++) {
+                for (let n = 0; n < this.kernel.data.length; n++) {
                     const neighbourPixel = pixelImage.getPixel(
-                        x - ((this.kernel.length - 1) / 2 - m),
-                        y - ((this.kernel.length - 1) / 2 - n)
+                        x - ((this.kernel.data.length - 1) / 2 - m),
+                        y - ((this.kernel.data.length - 1) / 2 - n)
                     );
-                    res.r += neighbourPixel.r * this.kernel[m][n] * this.opts?.factor!;
-                    res.g += neighbourPixel.g * this.kernel[m][n] * this.opts?.factor!;
-                    res.b += neighbourPixel.b * this.kernel[m][n] * this.opts?.factor!;
+                    res.r += neighbourPixel.r * this.kernel.data[m][n] * this.opts?.factor!;
+                    res.g += neighbourPixel.g * this.kernel.data[m][n] * this.opts?.factor!;
+                    res.b += neighbourPixel.b * this.kernel.data[m][n] * this.opts?.factor!;
                 }
             }
             if (this.opts!.normalize) {
@@ -45,15 +46,8 @@ export class Convolution {
                 res.b /= this.sumOfWeights;
             }
             return res;
+        } else {
+            return pixelImage.getPixel(x, y);
         }
-    }
-
-    apply(pixelImage: PixelImage) {
-        const _apply = (_pixelImage: PixelImage) => {
-            const clone = _pixelImage.clone();
-            _pixelImage.each((_, x, y) => this.applyKernelOnPixel(clone, x, y));
-            return _pixelImage;
-        };
-        return Array.from(Array(this.opts?.repeat!).keys()).reduce(acc => _apply(acc), pixelImage);
     }
 }

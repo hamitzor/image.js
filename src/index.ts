@@ -1,20 +1,15 @@
 import { Convolution } from "./convolution";
+import { GaussianBlur, SobelOperator } from "./filter";
 import { PixelImage } from "./pixel-image";
 
-const ELS: {
-    app: HTMLDivElement,
-    input: HTMLCanvasElement,
-    output: HTMLCanvasElement,
-    imageInput: HTMLInputElement,
-    loadImage: HTMLButtonElement,
-    gaussianBlur: HTMLAnchorElement
-} = {
+const ELS = {
     app: document.getElementById('app') as HTMLDivElement,
     input: document.getElementById('input') as HTMLCanvasElement,
     output: document.getElementById('output') as HTMLCanvasElement,
     imageInput: document.getElementById('imageInput') as HTMLInputElement,
     loadImage: document.getElementById('loadImage') as HTMLButtonElement,
-    gaussianBlur: document.getElementById('gaussianBlur') as HTMLAnchorElement
+    gaussianBlur: document.getElementById('gaussianBlur') as HTMLAnchorElement,
+    sobelOperator: document.getElementById('sobelOperator') as HTMLAnchorElement,
 };
 
 const CANVAS_SIZE = 600;
@@ -59,32 +54,23 @@ class Analyser {
                         }
                     }
                     this.renderImage(ELS.input, img);
+                    this.renderImage(ELS.output, img);
                     ELS.imageInput.value = '';
                 };
             };
         };
 
-
         ELS.gaussianBlur.onclick = () => {
-            const imageData = this.getImageDate(ELS.input);
-
-            const grayImage = new PixelImage(imageData).makeGrayscale();
-
             this.renderImage(
                 ELS.output,
-                grayImage
-                    .clone()
-                    .convolution(new Convolution([
-                        [1, 0, -1],
-                        [2, 0, -2],
-                        [1, 0, -1]
-                    ], { factor: 1 }))
-                    .add(grayImage.convolution(new Convolution([
-                        [1, 2, 1],
-                        [0, 0, 0],
-                        [-1, -2, -1]
-                    ], { factor: 1 })))
+                new PixelImage(this.getImageDate(ELS.output)).filter(new GaussianBlur())
+            );
+        };
 
+        ELS.sobelOperator.onclick = () => {
+            this.renderImage(
+                ELS.output,
+                new PixelImage(this.getImageDate(ELS.output)).filter(new SobelOperator())
             );
         };
     }
