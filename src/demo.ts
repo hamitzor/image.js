@@ -14,7 +14,7 @@ const ELS = {
 
 const CANVAS_SIZE = 600;
 
-class Analyser {
+class DemoApp {
 
     private imageWidth: number;
     private imageHeight: number;
@@ -109,7 +109,7 @@ const main = () => {
     (window as any).ELS = ELS;
     (window as any).PixelImage = PixelImage;
     (window as any).Convolution = Convolution;
-    (window as any).analyser = new Analyser();
+    (window as any).demo = new DemoApp();
 };
 
 document.addEventListener("DOMContentLoaded", main);

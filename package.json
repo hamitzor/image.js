@@ -1,7 +1,7 @@
 {
-  "name": "image-analyser",
+  "name": "js-img",
   "version": "1.0.0",
-  "description": "An application that can be used to analyse images. It can also be used to compress images.",
+  "description": "An image preprocessing library.",
   "main": "src/index.js",
   "scripts": {
     "watch": "webpack --watch",

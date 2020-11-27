@@ -1,6 +1,6 @@
-# image-analyser
+# js-img
 
-An application that can be used to analyse images. It can also be used to compress images.
+An image preprocessing library.
 
 To run the demo application simply run:
 
