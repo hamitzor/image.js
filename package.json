@@ -1,5 +1,5 @@
 {
-  "name": "js-img",
+  "name": "image.js",
   "version": "1.0.0",
   "description": "An image preprocessing library.",
   "main": "src/index.js",

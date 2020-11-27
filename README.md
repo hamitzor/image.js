@@ -1,4 +1,4 @@
-# js-img
+# image.js
 
 An image preprocessing library.
 
