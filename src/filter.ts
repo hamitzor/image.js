@@ -1,41 +1,80 @@
-import { Convolution } from "./convolution";
-import { Matrix } from "./matrix";
-import { PixelImage } from "./pixel-image";
+import { IntensityImage, RGBImage } from "./image";
+import { Matrix } from './matrix';
 
-export abstract class Filter {
-    abstract filter(source: PixelImage): PixelImage;
+export interface GaussianBlurOpts {
+    n?: number;
+    sigma?: number;
 }
 
-export class SobelOperator implements Filter {
-    filter(source: PixelImage): PixelImage {
-        const horizontalKernel = new Matrix([
-            [1, 2, 1],
-            [0, 0, 0],
-            [-1, -2, -1],
-        ]);
-        const horizontalConv = new Convolution(horizontalKernel);
-        const verticalConv = new Convolution(horizontalKernel.transpose());
+export interface Filter {
+    run(source: IntensityImage): any;
+}
 
-        const gray = source.makeGrayscale();
+export class BasicFilter extends Matrix implements Filter {
 
-        return gray.each((_, x, y) => {
-            const gradient = Math.sqrt(
-                Math.pow(horizontalConv.apply(gray, x, y).r, 2) + Math.pow(verticalConv.apply(gray, x, y).r, 2)
-            );
-            return { r: gradient, b: gradient, g: gradient };
-        });
+    runOnPixel(image: IntensityImage, i: number, j: number) {
+        if (i > 0 && j > 0 && i < image.rows - 1 && j < image.cols - 1) {
+            let res = 0;
+            for (let m = 0; m < this.rows; m++) {
+                for (let n = 0; n < this.cols; n++) {
+                    const neighborPixel = image.get(
+                        i - ((this.rows - 1) / 2 - m),
+                        j - ((this.cols - 1) / 2 - n)
+                    );
+                    res += neighborPixel * this.get(m, n);
+                }
+            }
+            return res;
+        } else {
+            return image.get(i, j);
+        }
+    }
+
+    run(source: IntensityImage) {
+        return source.each((_, i, j) => this.runOnPixel(source, i, j));
     }
 }
 
 export class GaussianBlur implements Filter {
-    filter(source: PixelImage): PixelImage {
-        const conv = new Convolution([
-            [1, 4, 7, 4, 1],
-            [4, 16, 26, 16, 4],
-            [7, 26, 41, 26, 7],
-            [4, 16, 26, 16, 4],
-            [1, 4, 7, 4, 1]
-        ], { normalize: true });
-        return source.each((_, x, y) => conv.apply(source, x, y));
+    private filter = new BasicFilter([
+        [0.0030, 0.0133, 0.0219, 0.0133, 0.0030],
+        [0.0133, 0.0596, 0.0983, 0.0596, 0.0133],
+        [0.0219, 0.0983, 0.1621, 0.0983, 0.0219],
+        [0.0133, 0.0596, 0.0983, 0.0596, 0.0133],
+        [0.0030, 0.0133, 0.0219, 0.0133, 0.0030]
+    ]);
+
+    run(source: IntensityImage) {
+        return this.filter.run(source);
+    }
+}
+
+
+export class Sobel implements Filter {
+    private dxFilter: BasicFilter;
+
+    constructor() {
+        this.dxFilter = new BasicFilter([
+            [1, 0, -1],
+            [2, 0, -2],
+            [1, 0, -1]
+        ]);
+    }
+
+    run(source: IntensityImage | RGBImage) {
+        if (source instanceof RGBImage) {
+            source = source.toGrayScale();
+        }
+        const gx = this.dxFilter.run(source);
+        const gy = this.dxFilter.transpose().run(source);
+
+        const g = new IntensityImage(source.rows, source.cols);
+        const theta = new IntensityImage(source.rows, source.cols);
+
+        source.each((_, i, j) => {
+            theta.set(i, j, Math.atan2(gy.get(i, j), gx.get(i, j)));
+            g.set(i, j, Math.sqrt(Math.pow(gy.get(i, j), 2) + Math.pow(gx.get(i, j), 2)));
+        });
+        return { g, theta };
     }
 }

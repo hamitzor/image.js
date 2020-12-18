@@ -1,6 +1,8 @@
-import { Convolution } from "./convolution";
-import { GaussianBlur, SobelOperator } from "./filter";
-import { PixelImage } from "./pixel-image";
+
+import { Matrix } from "./matrix";
+import { IntensityImage, Drawable, RGBImage } from "./image";
+import { GaussianBlur, Sobel } from "./filter";
+import { Canny } from "./feature";
 
 const ELS = {
     app: document.getElementById('app') as HTMLDivElement,
@@ -10,6 +12,7 @@ const ELS = {
     loadImage: document.getElementById('loadImage') as HTMLButtonElement,
     gaussianBlur: document.getElementById('gaussianBlur') as HTMLAnchorElement,
     sobelOperator: document.getElementById('sobelOperator') as HTMLAnchorElement,
+    canny: document.getElementById('canny') as HTMLAnchorElement
 };
 
 const CANVAS_SIZE = 600;
@@ -63,14 +66,28 @@ class DemoApp {
         ELS.gaussianBlur.onclick = () => {
             this.renderImage(
                 ELS.output,
-                new PixelImage(this.getImageDate(ELS.output)).filter(new GaussianBlur())
+                new GaussianBlur().run(IntensityImage.fromImageData(this.getImageData(ELS.output)))
             );
         };
 
         ELS.sobelOperator.onclick = () => {
             this.renderImage(
                 ELS.output,
-                new PixelImage(this.getImageDate(ELS.output)).filter(new SobelOperator())
+                new Sobel().run(IntensityImage.fromImageData(this.getImageData(ELS.output))).g
+            );
+        };
+
+        ELS.sobelOperator.onclick = () => {
+            this.renderImage(
+                ELS.output,
+                new Sobel().run(IntensityImage.fromImageData(this.getImageData(ELS.output))).g
+            );
+        };
+
+        ELS.canny.onclick = () => {
+            this.renderImage(
+                ELS.output,
+                new Canny().run(IntensityImage.fromImageData(this.getImageData(ELS.output)))
             );
         };
     }
@@ -81,7 +98,7 @@ class DemoApp {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    private getImageDate(canvas: HTMLCanvasElement) {
+    private getImageData(canvas: HTMLCanvasElement) {
         return canvas.getContext('2d')!.getImageData(
             (CANVAS_SIZE - this.imageWidth) / 2,
             (CANVAS_SIZE - this.imageHeight) / 2,
@@ -91,24 +108,22 @@ class DemoApp {
     }
 
     private renderImage(canvas: HTMLCanvasElement, img: HTMLImageElement): void;
-    private renderImage(canvas: HTMLCanvasElement, img: PixelImage): void;
-    private renderImage(canvas: HTMLCanvasElement, img: any) {
+    private renderImage(canvas: HTMLCanvasElement, img: Drawable): void;
+    private renderImage(canvas: HTMLCanvasElement, img: HTMLImageElement | Drawable) {
         this.clearCanvas(canvas);
         const ctx = canvas.getContext('2d')!;
         const dx = (CANVAS_SIZE - this.imageWidth) / 2;
         const dy = (CANVAS_SIZE - this.imageHeight) / 2;
-        if (img instanceof PixelImage) {
-            ctx.putImageData(img.imageData, dx, dy);
-        } else if (img instanceof HTMLImageElement) {
+        if (img instanceof HTMLImageElement) {
             ctx.drawImage(img, dx, dy, this.imageWidth, this.imageHeight);
+        } else {
+            ctx.putImageData(img.toImageData(), dx, dy);
         }
     }
 }
 
 const main = () => {
     (window as any).ELS = ELS;
-    (window as any).PixelImage = PixelImage;
-    (window as any).Convolution = Convolution;
     (window as any).demo = new DemoApp();
 };
 
