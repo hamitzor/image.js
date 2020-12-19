@@ -57,7 +57,7 @@ export class RGBPixel extends Pixel {
     }
 }
 
-export class RGBBitmapImage extends BitmapImage implements Drawable {
+export class RGBBitmapImage extends BitmapImage {
     static fromImageData(imageData: ImageData) {
         const data = new Array<RGBPixel>(imageData.width * imageData.height);
         for (let i = 0; i < imageData.width * imageData.height; i++) {
@@ -96,7 +96,7 @@ export class IntensityPixel extends Pixel {
     }
 }
 
-export class IntensityBitmapImage extends BitmapImage implements Drawable {
+export class IntensityBitmapImage extends BitmapImage {
 
     static fromImageData(imageData: ImageData) {
         const data = new Array<IntensityPixel>(imageData.width * imageData.height);
