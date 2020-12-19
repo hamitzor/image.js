@@ -15,16 +15,7 @@ export class Matrix<T> {
             if (typeof arg2 === 'number') {
                 this.rows = arg1;
                 this.cols = arg2;
-                if (arg3 !== undefined) {
-                    if (Array.isArray(arg3)) {
-                        this.data = arg3;
-                    } else {
-                        this.data = new Array(arg1 * arg2);
-                        this.data.fill(arg3);
-                    }
-                } else {
-                    this.data = new Array(arg1 * arg2);
-                }
+                this.data = Array.isArray(arg3) ? arg3 : new Array(arg1 * arg2).fill(arg3);
             } else {
                 throw new Error('Bad parameters for the constructor.');
             }

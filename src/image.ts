@@ -5,16 +5,35 @@ export interface Drawable {
 }
 
 export abstract class Pixel {
-    constructor(operation: (val: number, channelIndex: number) => number) {
-        this.update(operation);
+    constructor(operation?: (val: number, channelIndex: number) => number) {
+        this.update(operation ? operation : () => 0);
     }
     abstract update(operation: (val: number, channelIndex: number) => number): this;
     abstract getChannel(channelIndex: number): number;
 }
 
 export abstract class BitmapImage extends Matrix<Pixel> implements Drawable {
-    abstract clone(opts?: { empty: boolean }): BitmapImage;
-    abstract toImageData(): ImageData;
+    abstract createInstanceForClone(): BitmapImage;
+    toImageData() {
+        const data = new Uint8ClampedArray(this.cols * this.rows * 4);
+        for (let i = 0; i < this.cols * this.rows; i++) {
+            data[i * 4] = this.data[i].getChannel(0);
+            data[i * 4 + 1] = this.data[i].getChannel(1);
+            data[i * 4 + 2] = this.data[i].getChannel(2);
+            data[i * 4 + 3] = 255;
+        }
+        return new ImageData(data, this.cols, this.rows);
+    }
+
+    clone(opts?: { empty: boolean }): BitmapImage {
+        const cloned = this.createInstanceForClone();
+        if (!opts?.empty) {
+            for (let i = 0; i < cloned.data.length; i++) {
+                cloned.data[i].update((_, idx) => this.data[i].getChannel(idx));
+            }
+        }
+        return cloned;
+    }
 }
 
 export class RGBPixel extends Pixel {
@@ -47,29 +66,12 @@ export class RGBBitmapImage extends BitmapImage implements Drawable {
         return new RGBBitmapImage(imageData.height, imageData.width, data);
     }
 
-    clone(opts?: { empty: boolean }): RGBBitmapImage {
-        const data = new Array<Pixel>(this.data.length);
-        if (opts?.empty) {
-            for (let i = 0; i < data.length; i++) {
-                data[i] = new RGBPixel(() => 0);
-            }
-        } else {
-            for (let i = 0; i < data.length; i++) {
-                data[i] = new RGBPixel(() => this.data[i].getChannel(0));
-            }
-        }
-        return new RGBBitmapImage(this.rows, this.cols, data);
+    createInstanceForClone() {
+        return new RGBBitmapImage(this.rows, this.cols, Array.from({ length: this.rows * this.cols }, () => new RGBPixel()));
     }
 
-    toImageData() {
-        const data = new Uint8ClampedArray(this.cols * this.rows * 4);
-        for (let i = 0; i < this.cols * this.rows; i++) {
-            data[i * 4] = this.data[i].getChannel(0);
-            data[i * 4 + 1] = this.data[i].getChannel(1);
-            data[i * 4 + 2] = this.data[i].getChannel(2);
-            data[i * 4 + 3] = 255;
-        }
-        return new ImageData(data, this.cols, this.rows);
+    clone(opts?: { empty: boolean }) {
+        return super.clone(opts);
     }
 
     toGrayScale() {
@@ -104,28 +106,11 @@ export class IntensityBitmapImage extends BitmapImage implements Drawable {
         return new IntensityBitmapImage(imageData.height, imageData.width, data);
     }
 
-    clone(opts?: { empty: boolean }): IntensityBitmapImage {
-        const data = new Array<Pixel>(this.data.length);
-        if (opts?.empty) {
-            for (let i = 0; i < data.length; i++) {
-                data[i] = new IntensityPixel(() => 0);
-            }
-        } else {
-            for (let i = 0; i < data.length; i++) {
-                data[i] = new IntensityPixel(() => this.data[i].getChannel(0));
-            }
-        }
-        return new IntensityBitmapImage(this.rows, this.cols, data);
+    createInstanceForClone() {
+        return new IntensityBitmapImage(this.rows, this.cols, Array.from({ length: this.rows * this.cols }, () => new IntensityPixel()));
     }
 
-    toImageData() {
-        const data = new Uint8ClampedArray(this.cols * this.rows * 4);
-        for (let i = 0; i < this.cols * this.rows; i++) {
-            data[i * 4] = this.data[i].getChannel(0);
-            data[i * 4 + 1] = this.data[i].getChannel(0);
-            data[i * 4 + 2] = this.data[i].getChannel(0);
-            data[i * 4 + 3] = 255;
-        }
-        return new ImageData(data, this.cols, this.rows);
+    clone(opts?: { empty: boolean }) {
+        return super.clone(opts);
     }
 }
