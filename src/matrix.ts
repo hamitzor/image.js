@@ -1,16 +1,16 @@
-function isArrayOfArrays(val: Array<number> | Array<Array<number>>): val is Array<Array<number>> {
+function isArrayOfArrays<T>(val: Array<T> | Array<Array<T>>): val is Array<Array<T>> {
     return Array.isArray(val) && Array.isArray(val[0]);
 }
 
-export class Matrix {
+export class Matrix<T> {
 
-    protected data: Array<number>;
+    protected data: Array<T>;
     public rows: number;
     public cols: number;
 
-    constructor(rows: number, cols: number, fill?: number | Array<number>);
-    constructor(data: Array<Array<number>>);
-    constructor(arg1: number | Array<Array<number>> | Array<number>, arg2?: number, arg3?: number | Array<number>) {
+    constructor(rows: number, cols: number, fill?: T | Array<T>);
+    constructor(data: Array<Array<T>>);
+    constructor(arg1: number | Array<Array<T>> | Array<T>, arg2?: number, arg3?: T | Array<T>) {
         if (typeof arg1 === 'number') {
             if (typeof arg2 === 'number') {
                 this.rows = arg1;
@@ -39,7 +39,7 @@ export class Matrix {
         return this.data[i * this.cols + j];
     }
 
-    set(i: number, j: number, val: number) {
+    set(i: number, j: number, val: T) {
         this.data[i * this.cols + j] = val;
     }
 

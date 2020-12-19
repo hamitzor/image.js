@@ -1,8 +1,6 @@
-
-import { Matrix } from "./matrix";
-import { IntensityImage, Drawable, RGBImage } from "./image";
-import { GaussianBlur, Sobel } from "./filter";
-import { Canny } from "./feature";
+import { IntensityBitmapImage, Drawable, RGBBitmapImage } from './image';
+import { GaussianBlur, Sobel } from './filter';
+import { Canny } from './feature';
 
 const ELS = {
     app: document.getElementById('app') as HTMLDivElement,
@@ -28,7 +26,7 @@ class DemoApp {
             canvas.height = CANVAS_SIZE;
             canvas.onwheel = e => {
                 canvas.getContext('2d')?.scale(2, 2);
-            }
+            };
             this.clearCanvas(canvas);
         });
 
@@ -66,28 +64,21 @@ class DemoApp {
         ELS.gaussianBlur.onclick = () => {
             this.renderImage(
                 ELS.output,
-                new GaussianBlur().run(IntensityImage.fromImageData(this.getImageData(ELS.output)))
+                new GaussianBlur().run(RGBBitmapImage.fromImageData(this.getImageData(ELS.output)))
             );
         };
 
         ELS.sobelOperator.onclick = () => {
             this.renderImage(
                 ELS.output,
-                new Sobel().run(IntensityImage.fromImageData(this.getImageData(ELS.output))).g
-            );
-        };
-
-        ELS.sobelOperator.onclick = () => {
-            this.renderImage(
-                ELS.output,
-                new Sobel().run(IntensityImage.fromImageData(this.getImageData(ELS.output))).g
+                new Sobel().run(IntensityBitmapImage.fromImageData(this.getImageData(ELS.output))).g
             );
         };
 
         ELS.canny.onclick = () => {
             this.renderImage(
                 ELS.output,
-                new Canny().run(IntensityImage.fromImageData(this.getImageData(ELS.output)))
+                new Canny().run(IntensityBitmapImage.fromImageData(this.getImageData(ELS.input)))
             );
         };
     }
@@ -127,4 +118,4 @@ const main = () => {
     (window as any).demo = new DemoApp();
 };
 
-document.addEventListener("DOMContentLoaded", main);
+document.addEventListener('DOMContentLoaded', main);
