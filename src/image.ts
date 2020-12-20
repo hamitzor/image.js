@@ -9,7 +9,7 @@ export abstract class Pixel {
         this.update(operation ? operation : () => 0);
     }
     abstract update(operation: (val: number, channelIndex: number) => number): this;
-    abstract getChannel(channelIndex: number): number;
+    abstract getChannel(channelIndex?: number): number;
 }
 
 export abstract class BitmapImage extends Matrix<Pixel> implements Drawable {

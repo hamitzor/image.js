@@ -9,16 +9,15 @@ export interface GaussianBlurOpts {
 export class BasicFilter extends Matrix<number> {
     run(source: BitmapImage) {
         const cloned = source.clone({ empty: true });
-        // @TODO: padding.
-        for (let i = 2; i < source.rows - 2; i++) {
-            for (let j = 2; j < source.cols - 2; j++) {
+        for (let i = 0; i < source.rows; i++) {
+            for (let j = 0; j < source.cols; j++) {
                 for (let m = 0; m < this.rows; m++) {
                     for (let n = 0; n < this.cols; n++) {
                         const neighborPixel = source.get(
                             i - ((this.rows - 1) / 2 - m),
                             j - ((this.cols - 1) / 2 - n)
                         );
-                        cloned.get(i, j).update((acc, idx) => acc + neighborPixel.getChannel(idx) * this.get(m, n));
+                        cloned.get(i, j).update((acc, idx) => acc + (neighborPixel ? neighborPixel.getChannel(idx) : 0) * this.get(m, n));
                     }
                 }
             }

@@ -10,7 +10,9 @@ const ELS = {
     loadImage: document.getElementById('loadImage') as HTMLButtonElement,
     gaussianBlur: document.getElementById('gaussianBlur') as HTMLAnchorElement,
     sobelOperator: document.getElementById('sobelOperator') as HTMLAnchorElement,
-    canny: document.getElementById('canny') as HTMLAnchorElement
+    canny: document.getElementById('canny') as HTMLAnchorElement,
+    cannyLow: document.getElementById('cannyLow') as HTMLInputElement,
+    cannyHigh: document.getElementById('cannyHigh') as HTMLInputElement
 };
 
 const CANVAS_SIZE = 600;
@@ -71,14 +73,17 @@ class DemoApp {
         ELS.sobelOperator.onclick = () => {
             this.renderImage(
                 ELS.output,
-                new Sobel().run(IntensityBitmapImage.fromImageData(this.getImageData(ELS.output))).g
+                new Sobel().run(RGBBitmapImage.fromImageData(this.getImageData(ELS.output))).g
             );
         };
 
         ELS.canny.onclick = () => {
             this.renderImage(
                 ELS.output,
-                new Canny().run(IntensityBitmapImage.fromImageData(this.getImageData(ELS.input)))
+                new Canny({
+                    lowThreshold: parseInt(ELS.cannyLow.value, 10),
+                    highThreshold: parseInt(ELS.cannyHigh.value, 10)
+                }).run(IntensityBitmapImage.fromImageData(this.getImageData(ELS.output)))
             );
         };
     }
