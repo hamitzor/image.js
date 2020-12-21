@@ -1,31 +1,28 @@
-import { BitmapImage, IntensityBitmapImage, IntensityPixel, RGBBitmapImage } from './image';
+import { Bitmap } from './image';
 import { Matrix } from './matrix';
 
-export interface GaussianBlurOpts {
-    n?: number;
-    sigma?: number;
-}
-
 export class BasicFilter extends Matrix<number> {
-    run(source: BitmapImage) {
-        const cloned = source.clone({ empty: true });
-        for (let i = 0; i < source.rows; i++) {
-            for (let j = 0; j < source.cols; j++) {
+    run(source: Bitmap) {
+        const filtered = new Bitmap(source.width, source.height, source.channelCount);
+
+        for (let i = 0; i < filtered.height; i++) {
+            for (let j = 0; j < filtered.width; j++) {
                 for (let m = 0; m < this.rows; m++) {
                     for (let n = 0; n < this.cols; n++) {
-                        const neighborPixel = source.get(
-                            i - ((this.rows - 1) / 2 - m),
-                            j - ((this.cols - 1) / 2 - n)
-                        );
-                        cloned.get(i, j).update((acc, idx) => acc + (neighborPixel ? neighborPixel.getChannel(idx) : 0) * this.get(m, n));
+                        for (let c = 0; c < source.channelCount; c++) {
+                            const neighborPixel = source.get(i - ((this.rows - 1) / 2 - m), j - ((this.cols - 1) / 2 - n), c);
+                            filtered.set(i, j, filtered.get(i, j, c) + (neighborPixel ? neighborPixel : 0) * this.get(m, n), c);
+                        }
                     }
                 }
             }
         }
-        return cloned;
+
+        return filtered;
     }
 }
 
+// @TODO: add opts.
 export class GaussianBlur {
     private filter = new BasicFilter([
         [0.0030, 0.0133, 0.0219, 0.0133, 0.0030],
@@ -35,7 +32,7 @@ export class GaussianBlur {
         [0.0030, 0.0133, 0.0219, 0.0133, 0.0030]
     ]);
 
-    run(source: BitmapImage) {
+    run(source: Bitmap) {
         return this.filter.run(source);
     }
 }
@@ -52,24 +49,22 @@ export class Sobel {
         ]);
     }
 
-    run(source: IntensityBitmapImage | RGBBitmapImage) {
+    run(source: Bitmap) {
 
-        if (source instanceof RGBBitmapImage) {
+        if (source.channelCount > 1) {
             source = source.toGrayScale();
         }
 
         const gx = this.dxFilter.run(source);
         const gy = this.dxFilter.transpose().run(source);
 
-        const g = source.clone({ empty: true });
-        const theta =  source.clone({ empty: true });
+        const g = new Bitmap(source.width, source.height);
+        const theta = new Bitmap(source.width, source.height);
 
-        for (let i = 0; i < source.rows; i++) {
-            for (let j = 0; j < source.cols; j++) {
-                theta.get(i, j).update((_, idx) => Math.atan2(gy.get(i, j).getChannel(idx), gx.get(i, j).getChannel(idx)));
-                g.get(i, j).update((_, idx) =>
-                    Math.sqrt(Math.pow(gy.get(i, j).getChannel(idx), 2) + Math.pow(gx.get(i, j).getChannel(idx), 2))
-                );
+        for (let i = 0; i < source.height; i++) {
+            for (let j = 0; j < source.width; j++) {
+                theta.set(i, j, Math.atan2(gy.get(i, j), gx.get(i, j)));
+                g.set(i, j, Math.sqrt(Math.pow(gy.get(i, j), 2) + Math.pow(gx.get(i, j), 2)));
             }
         }
         return { g, theta };

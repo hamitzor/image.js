@@ -1,4 +1,4 @@
-import { IntensityBitmapImage, Drawable, RGBBitmapImage } from './image';
+import { Bitmap, Drawable } from './image';
 import { GaussianBlur, Sobel } from './filter';
 import { Canny } from './feature';
 
@@ -66,14 +66,15 @@ class DemoApp {
         ELS.gaussianBlur.onclick = () => {
             this.renderImage(
                 ELS.output,
-                new GaussianBlur().run(RGBBitmapImage.fromImageData(this.getImageData(ELS.output)))
+                new GaussianBlur().run(Bitmap.fromImageData(this.getImageData(ELS.output), 3))
             );
         };
+
 
         ELS.sobelOperator.onclick = () => {
             this.renderImage(
                 ELS.output,
-                new Sobel().run(RGBBitmapImage.fromImageData(this.getImageData(ELS.output))).g
+                new Sobel().run(Bitmap.fromImageData(this.getImageData(ELS.output), 3)).g
             );
         };
 
@@ -83,7 +84,7 @@ class DemoApp {
                 new Canny({
                     lowThreshold: parseInt(ELS.cannyLow.value, 10),
                     highThreshold: parseInt(ELS.cannyHigh.value, 10)
-                }).run(IntensityBitmapImage.fromImageData(this.getImageData(ELS.output)))
+                }).run(Bitmap.fromImageData(this.getImageData(ELS.output)))
             );
         };
     }
