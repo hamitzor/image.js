@@ -3,13 +3,13 @@ import { Matrix } from './matrix';
 
 export class BasicFilter extends Matrix<number> {
     run(source: Bitmap) {
-        const filtered = new Bitmap(source.width, source.height, source.channelCount);
+        const filtered = new Bitmap(source.width, source.height, source.channelNumber);
 
         for (let i = 0; i < filtered.height; i++) {
             for (let j = 0; j < filtered.width; j++) {
                 for (let m = 0; m < this.rows; m++) {
                     for (let n = 0; n < this.cols; n++) {
-                        for (let c = 0; c < source.channelCount; c++) {
+                        for (let c = 0; c < source.channelNumber; c++) {
                             const neighborPixel = source.get(i - ((this.rows - 1) / 2 - m), j - ((this.cols - 1) / 2 - n), c);
                             filtered.set(i, j, filtered.get(i, j, c) + (neighborPixel ? neighborPixel : 0) * this.get(m, n), c);
                         }
@@ -51,7 +51,7 @@ export class Sobel {
 
     run(source: Bitmap) {
 
-        if (source.channelCount > 1) {
+        if (source.channelNumber > 1) {
             source = source.toGrayScale();
         }
 

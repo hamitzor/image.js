@@ -1,6 +1,7 @@
 import { Bitmap, Drawable } from './image';
 import { GaussianBlur, Sobel } from './filter';
 import { Canny } from './feature';
+import { KMeansSegmentation } from './segmentation';
 
 const ELS = {
     app: document.getElementById('app') as HTMLDivElement,
@@ -12,7 +13,8 @@ const ELS = {
     sobelOperator: document.getElementById('sobelOperator') as HTMLAnchorElement,
     canny: document.getElementById('canny') as HTMLAnchorElement,
     cannyLow: document.getElementById('cannyLow') as HTMLInputElement,
-    cannyHigh: document.getElementById('cannyHigh') as HTMLInputElement
+    cannyHigh: document.getElementById('cannyHigh') as HTMLInputElement,
+    kmeans: document.getElementById('kmeans') as HTMLAnchorElement
 };
 
 const CANVAS_SIZE = 600;
@@ -85,6 +87,18 @@ class DemoApp {
                     lowThreshold: parseInt(ELS.cannyLow.value, 10),
                     highThreshold: parseInt(ELS.cannyHigh.value, 10)
                 }).run(Bitmap.fromImageData(this.getImageData(ELS.output)))
+            );
+        };
+
+        ELS.kmeans.onclick = () => {
+            this.renderImage(
+                ELS.output,
+                new KMeansSegmentation()
+                    .run(Bitmap.fromImageData(this.getImageData(ELS.output), 3), [
+                        [219, 68, 55],
+                        [244, 180, 0],
+                        [15, 157, 88]
+                    ])
             );
         };
     }
