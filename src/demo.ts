@@ -86,7 +86,7 @@ class DemoApp {
                 new Canny({
                     lowThresholdRatio: parseFloat(ELS.cannyLow.value),
                     highThresholdRatio: parseFloat(ELS.cannyHigh.value),
-                    gaussianOpts: { n: 5, sigma: 1 }
+                    gaussianBlurOpts: { n: 5, sigma: 1 }
                 }).run(Bitmap.fromImageData(this.getImageData(ELS.output)))
             );
         };
@@ -94,12 +94,12 @@ class DemoApp {
         ELS.kmeans.onclick = () => {
             this.renderImage(
                 ELS.output,
-                new KMeansSegmentation()
-                    .run(Bitmap.fromImageData(this.getImageData(ELS.output), 3), [
-                        [5, 128, 1],
+                new KMeansSegmentation({
+                    colors:
+                        [[212, 71, 0],
                         [214, 237, 23],
-                        [0, 100, 181]
-                    ], false)
+                        [0, 100, 181]]
+                }).run(Bitmap.fromImageData(this.getImageData(ELS.output), 3))
             );
         };
     }

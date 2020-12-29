@@ -6,16 +6,24 @@ export class Canny {
     private opts: Required<Canny.Opts> = {
         lowThresholdRatio: 0.2,
         highThresholdRatio: 0.5,
-        gaussianOpts: {
+        gaussianBlurOpts: {
             n: 5,
             sigma: 1
         }
     };
 
     constructor(opts?: Canny.Opts) {
-        this.opts.gaussianOpts = opts?.gaussianOpts ? Object.assign(this.opts.gaussianOpts, opts.gaussianOpts) : this.opts.gaussianOpts;
-        delete opts?.gaussianOpts;
-        this.opts = opts ? Object.assign(this.opts, opts) : this.opts;
+        if (opts) {
+            this.setOpts(opts);
+        }
+    }
+
+    setOpts(opts: Canny.Opts) {
+        if (opts.gaussianBlurOpts) {
+            this.opts.gaussianBlurOpts = Object.assign(this.opts.gaussianBlurOpts, opts.gaussianBlurOpts);
+            delete opts.gaussianBlurOpts;
+        }
+        this.opts = Object.assign(this.opts, opts);
     }
 
     private nonMaximumSuppression(g: Bitmap, theta: Bitmap) {
@@ -91,7 +99,7 @@ export class Canny {
     }
 
     run(source: Bitmap) {
-        const { g, theta } = new Sobel().run(new GaussianBlur(this.opts.gaussianOpts).run(source));
+        const { g, theta } = new Sobel().run(new GaussianBlur(this.opts.gaussianBlurOpts).run(source));
 
         const highThreshold = source.max() * this.opts.highThresholdRatio;
         const lowThreshold = highThreshold * this.opts.lowThresholdRatio;
@@ -104,7 +112,7 @@ export namespace Canny {
     export interface Opts {
         lowThresholdRatio?: number;
         highThresholdRatio?: number;
-        gaussianOpts?: GaussianBlur.Opts;
+        gaussianBlurOpts?: GaussianBlur.Opts;
     }
 
     export const WEAK = 100;

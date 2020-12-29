@@ -29,15 +29,19 @@ export class GaussianBlur {
 
     constructor(opts?: GaussianBlur.Opts) {
         if (opts) {
-            if (opts.n !== undefined && (typeof opts.n !== 'number' || opts.n < 3 || opts.n % 2 === 0)) {
-                throw new Error('Kernel size (n) should be an odd number greater than 3');
-            }
-
-            if (opts.sigma !== undefined && opts.sigma <= 0) {
-                throw new Error('Sigma should be a positive real number');
-            }
+            this.setOpts(opts);
         }
-        this.opts = opts ? Object.assign(this.opts, opts) : this.opts;
+    }
+
+    setOpts(opts: GaussianBlur.Opts) {
+        if (opts.n !== undefined && (typeof opts.n !== 'number' || opts.n < 3 || opts.n % 2 === 0)) {
+            throw new Error('Kernel size (n) should be an odd number greater than 3');
+        }
+
+        if (opts.sigma !== undefined && opts.sigma <= 0) {
+            throw new Error('Sigma should be a positive real number');
+        }
+        this.opts = Object.assign(this.opts, opts);
 
         const matrix: number[][] = Array.from({ length: this.opts.n }, () => new Array(this.opts.n).fill(0));
         let dist = Array.from({ length: this.opts.n }, (_, x) => gaussian(-2 + x * (4 / (this.opts.n - 1)), this.opts.sigma));

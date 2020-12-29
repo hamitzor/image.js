@@ -114,33 +114,3 @@ export namespace KMeans {
         get(idx: number, dimension: number): number;
     }
 }
-
-export const demo = () => {
-
-    const SAMPLE_NUMBER = 1024 * 1024;
-    const DIMENSION = 1;
-
-    class TestSamples implements KMeans.Samples {
-        public data = Array.from({ length: SAMPLE_NUMBER }, () => random(255));
-        length = SAMPLE_NUMBER;
-        dimensionNumber = DIMENSION;
-        get(idx: number, dimension: number) {
-            return this.data[idx];
-        }
-    }
-
-
-    const samples = new TestSamples();
-    const start = window.performance.now();
-    console.log('Starting K-Means...');
-    const { clusters, centroids } = new KMeans(samples, { maxIterations: 50, clusterNumber: 3 }).run();
-    console.log('Took: ', window.performance.now() - start, 'ms');
-
-    console.log(samples.data);
-    console.log(clusters.filter(x => x === 0));
-    console.log(clusters.filter(x => x === 1));
-    console.log(clusters.filter(x => x === 2));
-    console.log(centroids[0]);
-    console.log(centroids[1]);
-    console.log(centroids[2]);
-};
