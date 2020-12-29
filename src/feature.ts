@@ -1,12 +1,20 @@
 import { GaussianBlur, Sobel } from './filter';
 import { Bitmap } from './image';
 
-// @TODO: Set low and high threshold values more cleverly.
 export class Canny {
 
-    private opts = { lowThreshold: 50, highThreshold: 150 };
+    private opts: Required<Canny.Opts> = {
+        lowThresholdRatio: 0.2,
+        highThresholdRatio: 0.5,
+        gaussianOpts: {
+            n: 5,
+            sigma: 1
+        }
+    };
 
     constructor(opts?: Canny.Opts) {
+        this.opts.gaussianOpts = opts?.gaussianOpts ? Object.assign(this.opts.gaussianOpts, opts.gaussianOpts) : this.opts.gaussianOpts;
+        delete opts?.gaussianOpts;
         this.opts = opts ? Object.assign(this.opts, opts) : this.opts;
     }
 
@@ -83,15 +91,20 @@ export class Canny {
     }
 
     run(source: Bitmap) {
-        const { g, theta } = new Sobel().run(new GaussianBlur().run(source));
-        return this.hysteresis(this.threshold(this.nonMaximumSuppression(g, theta), this.opts.lowThreshold, this.opts.highThreshold));
+        const { g, theta } = new Sobel().run(new GaussianBlur(this.opts.gaussianOpts).run(source));
+
+        const highThreshold = source.max() * this.opts.highThresholdRatio;
+        const lowThreshold = highThreshold * this.opts.lowThresholdRatio;
+
+        return this.hysteresis(this.threshold(this.nonMaximumSuppression(g, theta), lowThreshold, highThreshold));
     }
 }
 
 export namespace Canny {
     export interface Opts {
-        lowThreshold?: number;
-        highThreshold?: number;
+        lowThresholdRatio?: number;
+        highThresholdRatio?: number;
+        gaussianOpts?: GaussianBlur.Opts;
     }
 
     export const WEAK = 100;

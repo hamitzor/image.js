@@ -84,8 +84,9 @@ class DemoApp {
             this.renderImage(
                 ELS.output,
                 new Canny({
-                    lowThreshold: parseInt(ELS.cannyLow.value, 10),
-                    highThreshold: parseInt(ELS.cannyHigh.value, 10)
+                    lowThresholdRatio: parseFloat(ELS.cannyLow.value),
+                    highThresholdRatio: parseFloat(ELS.cannyHigh.value),
+                    gaussianOpts: { n: 5, sigma: 1 }
                 }).run(Bitmap.fromImageData(this.getImageData(ELS.output)))
             );
         };
@@ -95,10 +96,10 @@ class DemoApp {
                 ELS.output,
                 new KMeansSegmentation()
                     .run(Bitmap.fromImageData(this.getImageData(ELS.output), 3), [
-                        [219, 68, 55],
-                        [244, 180, 0],
-                        [15, 157, 88]
-                    ])
+                        [5, 128, 1],
+                        [214, 237, 23],
+                        [0, 100, 181]
+                    ], false)
             );
         };
     }

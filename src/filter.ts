@@ -1,5 +1,6 @@
 import { Bitmap } from './image';
 import { Matrix } from './matrix';
+import { gaussian } from './util';
 
 export class BasicFilter extends Matrix<number> {
     run(source: Bitmap) {
@@ -22,18 +23,43 @@ export class BasicFilter extends Matrix<number> {
     }
 }
 
-// @TODO: add opts.
 export class GaussianBlur {
-    private filter = new BasicFilter([
-        [0.0030, 0.0133, 0.0219, 0.0133, 0.0030],
-        [0.0133, 0.0596, 0.0983, 0.0596, 0.0133],
-        [0.0219, 0.0983, 0.1621, 0.0983, 0.0219],
-        [0.0133, 0.0596, 0.0983, 0.0596, 0.0133],
-        [0.0030, 0.0133, 0.0219, 0.0133, 0.0030]
-    ]);
+    private opts: Required<GaussianBlur.Opts> = { sigma: 1, n: 5 };
+    private filter: BasicFilter;
+
+    constructor(opts?: GaussianBlur.Opts) {
+        if (opts) {
+            if (opts.n !== undefined && (typeof opts.n !== 'number' || opts.n < 3 || opts.n % 2 === 0)) {
+                throw new Error('Kernel size (n) should be an odd number greater than 3');
+            }
+
+            if (opts.sigma !== undefined && opts.sigma <= 0) {
+                throw new Error('Sigma should be a positive real number');
+            }
+        }
+        this.opts = opts ? Object.assign(this.opts, opts) : this.opts;
+
+        const matrix: number[][] = Array.from({ length: this.opts.n }, () => new Array(this.opts.n).fill(0));
+        let dist = Array.from({ length: this.opts.n }, (_, x) => gaussian(-2 + x * (4 / (this.opts.n - 1)), this.opts.sigma));
+        const sum = dist.reduce((acc, val) => acc + val, 0);
+        dist = dist.map(x => x / sum);
+        for (let x = 0; x < this.opts.n; x++) {
+            for (let y = 0; y < this.opts.n; y++) {
+                matrix[x][y] = dist[x] * dist[y];
+            }
+        }
+        this.filter = new BasicFilter(matrix);
+    }
 
     run(source: Bitmap) {
         return this.filter.run(source);
+    }
+}
+
+export namespace GaussianBlur {
+    export interface Opts {
+        sigma?: number;
+        n?: number;
     }
 }
 

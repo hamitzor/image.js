@@ -14,7 +14,7 @@ export class Bitmap implements Drawable {
         this.height = height;
         if (Array.isArray(fill)) {
             if (fill.length !== width * height * channelNumber) {
-                throw new Error('Given pixel array does not match the dimensions and the channel count.');
+                throw new Error('Given pixel array does not match the dimension and the channel count.');
             }
             this.pixels = fill;
         } else {
@@ -37,6 +37,10 @@ export class Bitmap implements Drawable {
             }
         }
         return new Bitmap(imageData.width, imageData.height, channelNumber, pixels);
+    }
+
+    max() {
+        return this.pixels.reduce((max, val) => max > val ? max : val);
     }
 
     get(i: number, j: number, channelIdx = 0) {
