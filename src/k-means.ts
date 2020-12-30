@@ -22,7 +22,7 @@ export class KMeans {
     }
 
     /**
-     * Update options.
+     * Update the options.
      * @param opts - The new options.
      */
     setOpts(opts: KMeans.Opts) {

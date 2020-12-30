@@ -108,12 +108,12 @@
 					<div class="tsd-signature tsd-kind-icon">by<wbr>Intensity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in segmentation.ts:120</li>
+							<li>Defined in segmentation.ts:121</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Specifies whether use intensity (treat as grayscale) or the actual RGB values for doing segmentation when
+							<p>Specifies whether intensity (treat as grayscale) or the actual RGB values are used for doing segmentation when
 							the image is RGB colored.</p>
 						</div>
 					</div>
@@ -124,14 +124,15 @@
 					<div class="tsd-signature tsd-kind-icon">colors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in segmentation.ts:115</li>
+							<li>Defined in segmentation.ts:116</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Segment count. It is named colors, because it can also be used to directly specify the output color of the segments.
-								To specify colors, provide an array that contains colors as array of RGB values, e.g <code>[[0,0,0], [100,100,100]]</code>.
-							If only a number is supplied, then the colors will be derived from the mean of the segments. (Can be used to reduce the bit-dept)</p>
+								To specify colors, provide an array that contains colors as array of RGB values, e.g <code>[[0,0,0], [100,100,100]]</code> means
+								create 2 segments and use R:0, G:0, B:0 for the first segment and R:100, G:100, B:100 for the second one.
+							If only a number is supplied, then the colors will be derived from the mean of the segments, i.e reduce the bit-dept.</p>
 						</div>
 					</div>
 				</section>

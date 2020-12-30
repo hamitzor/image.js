@@ -70,7 +70,7 @@ export class GaussianBlur {
     }
 
     /**
-     * Update options.
+     * Update the options.
      * @param opts - Options for the gaussian blurring.
      */
     setOpts(opts: GaussianBlur.Opts) {

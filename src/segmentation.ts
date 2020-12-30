@@ -65,7 +65,7 @@ export class KMeansSegmentation {
     }
 
     /**
-     * Update options.
+     * Update the options.
      * @param opts - The new options.
      */
     setOpts(opts: KMeansSegmentation.Opts) {
@@ -109,12 +109,13 @@ export namespace KMeansSegmentation {
     export interface Opts {
         /**
          * Segment count. It is named colors, because it can also be used to directly specify the output color of the segments.
-         * To specify colors, provide an array that contains colors as array of RGB values, e.g `[[0,0,0], [100,100,100]]`.
-         * If only a number is supplied, then the colors will be derived from the mean of the segments. (Can be used to reduce the bit-dept)
+         * To specify colors, provide an array that contains colors as array of RGB values, e.g `[[0,0,0], [100,100,100]]` means
+         * create 2 segments and use R:0, G:0, B:0 for the first segment and R:100, G:100, B:100 for the second one.
+         * If only a number is supplied, then the colors will be derived from the mean of the segments, i.e reduce the bit-dept.
          */
         colors?: number[][] | number;
         /**
-         * Specifies whether use intensity (treat as grayscale) or the actual RGB values for doing segmentation when
+         * Specifies whether intensity (treat as grayscale) or the actual RGB values are used for doing segmentation when
          * the image is RGB colored.
          */
         byIntensity?: boolean;
