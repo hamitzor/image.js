@@ -1,8 +1,8 @@
-import { Bitmap, Drawable } from './image';
-import { GaussianBlur, Sobel, BasicFilter } from './filter';
-import { Canny } from './feature';
-import { KMeansSegmentation } from './segmentation';
-import { random } from './util';
+import { Bitmap, Drawable } from '../src/image';
+import { GaussianBlur, Sobel, BasicFilter } from '../src/filter';
+import { Canny } from '../src/feature';
+import { KMeansSegmentation } from '../src/segmentation';
+import { random } from '../src/util';
 
 const CANVAS_SIZE = 800;
 
