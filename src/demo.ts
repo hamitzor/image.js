@@ -298,7 +298,6 @@ class DemoApp {
 
         this.ELS.popups.kernel.apply.onclick = () => {
             this.hidePopup(this.ELS.popups.kernel.popup);
-            console.log(this.kernel.matrix + '');
             this.kernel.matrix.run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
                 .then(result => this.do(() => this.renderImage(this.ELS.input, result)))
                 .catch(err => alert(err));
