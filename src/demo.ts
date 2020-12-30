@@ -14,6 +14,7 @@ class DemoApp {
         input: document.getElementById('input') as HTMLCanvasElement,
         imageInput: document.getElementById('imageInput') as HTMLInputElement,
         loadImage: document.getElementById('loadImage') as HTMLButtonElement,
+        loadImage2: document.getElementById('loadImage2') as HTMLButtonElement,
         undo: document.getElementById('undo') as HTMLButtonElement,
         redo: document.getElementById('redo') as HTMLButtonElement,
         grayscale: document.getElementById('grayscale') as HTMLButtonElement,
@@ -340,13 +341,13 @@ class DemoApp {
             this.clearCanvas(canvas);
         });
 
-        this.ELS.loadImage.onclick = () => {
-            this.ELS.imageInput.click();
-        };
+        this.ELS.loadImage.onclick = () => this.ELS.imageInput.click();
+        this.ELS.loadImage2.onclick = () => this.ELS.imageInput.click();
 
         this.ELS.imageInput.onchange = () => {
             this.ELS.grayscale.disabled = false;
             this.ELS.sobel.disabled = false;
+            this.ELS.loadImage2.style.display = 'none';
             Object.keys(this.ELS.popups).forEach(name => {
                 const els = (this.ELS.popups as any)[name] as { [key: string]: HTMLElement };
                 (els.open as HTMLButtonElement).disabled = false;
