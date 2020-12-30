@@ -1,6 +1,6 @@
 # image.js
 
-![Demo Application](https://mygit.th-deg.de/hz29287/image.js/-/raw/master/docs/demo.jpg "Demo Application")
+![Demo Application](https://mygit.th-deg.de/hz29287/image.js/-/raw/master/public/demo.jpg "Demo Application")
 
 An image preprocessing library.
 

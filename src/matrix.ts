@@ -13,8 +13,9 @@ export class Matrix<T> {
 
     /**
      * Create a matrix with dimension information.
-     * @param rows - height of the matrix
-     * @param cols - width of the matrix
+     * @param rows - Height of the matrix
+     * @param cols - Width of the matrix
+     * @param fill - A single value to fill the matrix, or an array that contains the elements consecutively.
      */
     constructor(rows: number, cols: number, fill?: T | Array<T>);
 
@@ -62,6 +63,7 @@ export class Matrix<T> {
 
     /**
      * Get a string representation of the matrix that can be used for debugging.
+     * @returns string representation of the matrix.
      */
     toString(): string {
         let str = '';
@@ -76,7 +78,7 @@ export class Matrix<T> {
     }
 
     /**
-     * Transpose the matrix. This method mutates  the original matrix.
+     * Transpose the matrix. This method mutates the original matrix.
      * @returns this
      */
     transpose() {

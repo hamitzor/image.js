@@ -2,11 +2,15 @@
  * Represents an object that can be drawn into a canvas.
  */
 export interface Drawable {
+    /**
+     * Return an ImageData instance that represents the image.
+     * @returns Created image data.
+     */
     toImageData(): ImageData;
 }
 
 /**
- * Represents an bitmap image with arbitrary channels.
+ * Represents a bitmap image with arbitrary channels.
  */
 export class Bitmap implements Drawable {
     public pixels: number[];
@@ -15,11 +19,11 @@ export class Bitmap implements Drawable {
     public height: number;
 
     /**
-     * Create an image bitmap.
-     * @param width - width of the image in pixels.
-     * @param height - height of the image in pixels.
-     * @param channelNumber - channel count of the image, default is 1 (grayscale).
-     * @param fill - a value to fill the image (in all channels), or an array that holds
+     * Create a bitmap image.
+     * @param width - Width of the image in pixels.
+     * @param height - Height of the image in pixels.
+     * @param channelNumber - Channel count of the image, default is 1 (grayscale).
+     * @param fill - A value to fill the image (in all channels), or an array that holds
      * consecutive pixel data with consecutive channel values. If omitted, 0 will be used.
      */
     constructor(width: number, height: number, channelNumber = 1, fill?: number[] | number) {
@@ -38,9 +42,9 @@ export class Bitmap implements Drawable {
 
     /**
      * A factory method that can be used to derive an image object from a native ImageData instance.
-     * @param imageData - the image data to be used.
-     * @param channelNumber - channel count of the image, default is 1 (grayscale).
-     * @returns a image object populated with the data from the image data.
+     * @param imageData - The image data to be used.
+     * @param channelNumber - Channel count of the image, default is 1 (grayscale).
+     * @returns A image object populated with the data from the image data.
      */
     static fromImageData(imageData: ImageData, channelNumber = 1) {
         const pixels = new Array(imageData.width * imageData.height * channelNumber);
@@ -61,8 +65,8 @@ export class Bitmap implements Drawable {
     }
 
     /**
-     * Get the globally maximum pixel value in the image.
-     * @returns the maximum value.
+     * Get the global maximum pixel value in the image.
+     * @returns The maximum value.
      */
     max() {
         return this.pixels.reduce((max, val) => max > val ? max : val);
@@ -70,7 +74,10 @@ export class Bitmap implements Drawable {
 
     /**
      * Get the channel value of a pixel at a given position.
-     * @returns the channel value.
+     * @param i - The row of the pixel.
+     * @param j - The column of the pixel.
+     * @param channelIdx - The channel number.
+     * @returns The channel value.
      */
     get(i: number, j: number, channelIdx = 0) {
         return this.pixels[(i * this.width + j) * this.channelNumber + channelIdx];
@@ -78,14 +85,18 @@ export class Bitmap implements Drawable {
 
     /**
      * Set the channel value of a pixel at a given position.
+     * @param i - The row of the pixel.
+     * @param j - The column of the pixel.
+     * @param channelIdx - The channel number.
+     * @param val - The new value.
      */
     set(i: number, j: number, val: number, channelIdx = 0) {
         this.pixels[(i * this.width + j) * this.channelNumber + channelIdx] = val;
     }
 
      /**
-     * Generate a image data object from the image.
-     * @returns created image data
+     * Create an ImageData instance that represents the image.
+     * @returns Created image data
      */
     toImageData() {
         const data = new Uint8ClampedArray(this.width * this.height * 4);
@@ -103,7 +114,7 @@ export class Bitmap implements Drawable {
 
     /**
      * Clone the image.
-     * @returns cloned image.
+     * @returns Cloned image.
      */
     clone() {
         return new Bitmap(this.width, this.height, this.channelNumber, this.pixels.map(x => x));
@@ -111,7 +122,7 @@ export class Bitmap implements Drawable {
 
     /**
      * Return grayscale image. This method does not mutate the original object.
-     * @returns created grayscale image.
+     * @returns Created grayscale image.
      */
     toGrayScale() {
         if (this.channelNumber < 2) {
@@ -130,7 +141,7 @@ export class Bitmap implements Drawable {
 
     /**
      * Rise the number of channels to any number. Can only be invoked on single channel images.
-     * @returns created multi-channel image.
+     * @returns Created multi-channel image.
      */
     toMultiChannel(channelNumber: number) {
         // When the image is already multichannel, conversion cannot be done without ambiguity, so just throw an error.

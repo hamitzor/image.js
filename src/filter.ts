@@ -10,8 +10,8 @@ export class BasicFilter extends Matrix<number> {
 
     /**
     * Start doing the convolution. This method doesn't mutate the source image.
-    * @param source - source image
-    * @returns - a promise that is resolved with the resulting image. (with original channel count)
+    * @param source - Source image
+    * @returns - A promise that is resolved with the resulting image. (with original channel count)
     */
     run(source: Bitmap): Promise<Bitmap> {
         return new Promise((resolve, reject) => {
@@ -51,7 +51,7 @@ export class GaussianBlur {
 
     /**
      * Create a gaussian blur filter.
-     * @param opts - options for the gaussian blurring.
+     * @param opts - Options for the gaussian blurring.
      */
     constructor(opts?: GaussianBlur.Opts) {
         if (opts) {
@@ -62,7 +62,7 @@ export class GaussianBlur {
 
     /**
      * Update options.
-     * @param opts - options for the gaussian blurring.
+     * @param opts - Options for the gaussian blurring.
      */
     setOpts(opts: GaussianBlur.Opts) {
         if (opts.n !== undefined && (typeof opts.n !== 'number' || opts.n < 3 || opts.n % 2 === 0)) {
@@ -106,8 +106,8 @@ export class GaussianBlur {
 
     /**
      * Do a convolution and return the result. This method does not mutate the original image.
-     * @param source- source image.
-     * @returns - a promise that resolves with resulting image (with original channel count).
+     * @param source - Source image.
+     * @returns - A promise that resolves with resulting image (with original channel count).
      */
     run(source: Bitmap) {
         return this.filter.run(source);
@@ -119,8 +119,14 @@ export namespace GaussianBlur {
      * Represents options for the gaussian blurring.
      */
     export interface Opts {
-        sigma?: number; // standard deviation of the gaussian distribution
-        n?: number; // size of the kernel
+        /**
+         * Standard deviation of the gaussian distribution
+         */
+        sigma?: number;
+        /**
+         * Size of the kernel
+         */
+        n?: number;
     }
 }
 
@@ -144,8 +150,8 @@ export class Sobel {
 
     /**
      * Run the filter.
-     * @param source - the source image.
-     * @returns a promise that resolves with the resulting image (with single channel).
+     * @param source - The source image.
+     * @returns A promise that resolves with the resulting image (with single channel).
      */
     run(source: Bitmap) {
         // Make the image grayscale, if not.
