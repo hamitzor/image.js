@@ -2,14 +2,28 @@ function isArrayOfArrays<T>(val: Array<T> | Array<Array<T>>): val is Array<Array
     return Array.isArray(val) && Array.isArray(val[0]);
 }
 
+/**
+ * Represents a matrix whose values are of type T.
+ */
 export class Matrix<T> {
 
     protected data: Array<T>;
     public rows: number;
     public cols: number;
 
+    /**
+     * Create a matrix with dimension information.
+     * @param rows - height of the matrix
+     * @param cols - width of the matrix
+     */
     constructor(rows: number, cols: number, fill?: T | Array<T>);
+
+    /**
+     * Create a from native 2D array.
+     * @param data - a 2D array represents the matrix.
+     */
     constructor(data: Array<Array<T>>);
+
     constructor(arg1: number | Array<Array<T>> | Array<T>, arg2?: number, arg3?: T | Array<T>) {
         if (typeof arg1 === 'number') {
             if (typeof arg2 === 'number') {
@@ -26,14 +40,29 @@ export class Matrix<T> {
         }
     }
 
-    get(i: number, j: number) {
+    /**
+     * Get the value at (i,j)
+     * @param i - row number.
+     * @param j - column number.
+     * @returns value at (i, j)
+     */
+    get(i: number, j: number): T {
         return this.data[i * this.cols + j];
     }
 
+    /**
+     * Set the value at (i,j)
+     * @param i - row number.
+     * @param j - column number.
+     * @param val - new value
+     */
     set(i: number, j: number, val: T) {
         this.data[i * this.cols + j] = val;
     }
 
+    /**
+     * Get a string representation of the matrix that can be used for debugging.
+     */
     toString(): string {
         let str = '';
         str += `Matrix (${this.rows}, ${this.cols}):`;
@@ -46,6 +75,10 @@ export class Matrix<T> {
         return str;
     }
 
+    /**
+     * Transpose the matrix. This method mutates  the original matrix.
+     * @returns this
+     */
     transpose() {
         const result = Array(this.rows * this.cols);
         for (let i = 0; i < this.rows; i++) {
