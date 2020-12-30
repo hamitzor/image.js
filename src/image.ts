@@ -13,9 +13,25 @@ export interface Drawable {
  * Represents a bitmap image with arbitrary channels.
  */
 export class Bitmap implements Drawable {
+
+    /**
+     * A 1-D array that contains consecutive pixel data with consecutive channel values.
+     */
     public pixels: number[];
+
+    /**
+     * The channel count of the image.
+     */
     public channelNumber: number;
+
+    /**
+     * The width of the image.
+     */
     public width: number;
+
+    /**
+     * The height of the image.
+     */
     public height: number;
 
     /**

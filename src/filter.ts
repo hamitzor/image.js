@@ -46,7 +46,14 @@ export class BasicFilter extends Matrix<number> {
  * Represents a gaussian blur filter.
  */
 export class GaussianBlur {
+    /**
+     * The options.
+     */
     private opts: Required<GaussianBlur.Opts> = { sigma: 1, n: 5 };
+
+    /**
+     * The actual filter instance that performs convolution.
+     */
     private filter: BasicFilter;
 
     /**
@@ -87,15 +94,15 @@ export class GaussianBlur {
         // Initialize the kernel with zeros.
         const matrix: number[][] = Array.from({ length: this.opts.n }, () => new Array(this.opts.n).fill(0));
 
-        // Create an array that holds n evenly spaced samples from 1D gaussian distribution between -2*sigma and 2*sigma.
+        // Create an array that holds n evenly spaced samples from 1-D gaussian distribution between -2*sigma and 2*sigma.
         let dist = Array.from({ length: this.opts.n }, (_, x) => gaussian(-2 + x * (4 / (this.opts.n - 1)), this.opts.sigma));
 
         // Divide each element by the overall sum, to make sure the array adds up to 1.
         const sum = dist.reduce((acc, val) => acc + val, 0);
         dist = dist.map(x => x / sum);
 
-        // Construct the resulting kernel. Since there is no correlation between axes, just multiply two 1D gaussian distributions
-        // to find the value of 2D gaussian distribution at any position.
+        // Construct the resulting kernel. Since there is no correlation between axes, just multiply two 1-D gaussian distributions
+        // to find the value of 2-D gaussian distribution at any position.
         for (let x = 0; x < this.opts.n; x++) {
             for (let y = 0; y < this.opts.n; y++) {
                 matrix[x][y] = dist[x] * dist[y];
@@ -134,13 +141,15 @@ export namespace GaussianBlur {
  * Represents a sobel filter.
  */
 export class Sobel {
+    /**
+     * The the kernel that estimates horizontal gradient. Transpose of this used to estimate the vertical gradient.
+     */
     private dxFilter: BasicFilter;
 
     /**
      * Create a sobel filter.
      */
     constructor() {
-        // Create the kernel that finds the horizontal derivative.
         this.dxFilter = new BasicFilter([
             [1, 0, -1],
             [2, 0, -2],

@@ -7,8 +7,19 @@ function isArrayOfArrays<T>(val: Array<T> | Array<Array<T>>): val is Array<Array
  */
 export class Matrix<T> {
 
+    /**
+     * A 1-D array that contains the elements in the matrix consecutively.
+     */
     protected data: Array<T>;
+
+    /**
+     * The height of the matrix.
+     */
     public rows: number;
+
+    /**
+     * The width of the matrix.
+     */
     public cols: number;
 
     /**
@@ -20,8 +31,8 @@ export class Matrix<T> {
     constructor(rows: number, cols: number, fill?: T | Array<T>);
 
     /**
-     * Create a from native 2D array.
-     * @param data - a 2D array represents the matrix.
+     * Create a from native 2-D array.
+     * @param data - A 2-D array represents the matrix.
      */
     constructor(data: Array<Array<T>>);
 
@@ -43,9 +54,9 @@ export class Matrix<T> {
 
     /**
      * Get the value at (i,j)
-     * @param i - row number.
-     * @param j - column number.
-     * @returns value at (i, j)
+     * @param i - Row number.
+     * @param j - Column number.
+     * @returns Value at (i, j)
      */
     get(i: number, j: number): T {
         return this.data[i * this.cols + j];
@@ -53,9 +64,9 @@ export class Matrix<T> {
 
     /**
      * Set the value at (i,j)
-     * @param i - row number.
-     * @param j - column number.
-     * @param val - new value
+     * @param i - Row number.
+     * @param j - Column number.
+     * @param val - New value
      */
     set(i: number, j: number, val: T) {
         this.data[i * this.cols + j] = val;
@@ -63,7 +74,7 @@ export class Matrix<T> {
 
     /**
      * Get a string representation of the matrix that can be used for debugging.
-     * @returns string representation of the matrix.
+     * @returns String representation of the matrix.
      */
     toString(): string {
         let str = '';
