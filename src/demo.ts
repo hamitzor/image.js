@@ -16,6 +16,7 @@ class DemoApp {
         loadImage: document.getElementById('loadImage') as HTMLButtonElement,
         undo: document.getElementById('undo') as HTMLButtonElement,
         redo: document.getElementById('redo') as HTMLButtonElement,
+        grayscale: document.getElementById('grayscale') as HTMLButtonElement,
         sobel: document.getElementById('sobel') as HTMLButtonElement,
         popups: {
             kernel: {
@@ -25,7 +26,8 @@ class DemoApp {
                 matrix: document.getElementById('kernelOptionsMatrix') as HTMLDivElement,
                 apply: document.getElementById('kernelApply') as HTMLButtonElement,
                 cancel: document.getElementById('kernelCancel') as HTMLButtonElement,
-                error: document.getElementById('kernelError') as HTMLDivElement
+                error: document.getElementById('kernelError') as HTMLDivElement,
+                transpose: document.getElementById('kernelTranspose') as HTMLButtonElement
             },
             gauss: {
                 open: document.getElementById('gaussOpen') as HTMLButtonElement,
@@ -138,6 +140,10 @@ class DemoApp {
             }
         });
 
+        this.ELS.grayscale.onclick = () => {
+            this.do(() => this.renderImage(this.ELS.input, Bitmap.fromImageData(this.getImageData(this.ELS.input))));
+        };
+
         const onGaussChange = () => {
             try {
                 this.hide(this.ELS.popups.gauss.error);
@@ -222,6 +228,16 @@ class DemoApp {
         this.ELS.popups.gauss.sigma.onkeyup = onGaussChange;
         this.ELS.popups.gauss.size.onkeyup = onGaussChange;
 
+        this.ELS.popups.kernel.transpose.onclick = () => {
+            this.kernel.matrix.transpose();
+            for (let i = 0; i < this.kernel.size; i++) {
+                for (let j = 0; j < this.kernel.size; j++) {
+                    const el = document.getElementById(`kernelCell_${i}_${j}`) as HTMLInputElement;
+                    el.value = '' + this.kernel.matrix.get(i, j);
+                }
+            }
+        };
+
         this.ELS.popups.kernel.size.onkeyup = () => {
             this.hide(this.ELS.popups.kernel.error);
             const size = parseInt(this.ELS.popups.kernel.size.value, 10);
@@ -258,9 +274,8 @@ class DemoApp {
                 for (let j = 0; j < size; j++) {
                     const el = document.getElementById(`kernelCell_${i}_${j}`) as HTMLInputElement;
                     if (el) {
-                        el.onkeyup = () => {
+                        el.onchange = () => {
                             matrix.set(i, j, parseFloat(el.value));
-                            console.log(this.kernel);
                         };
                     }
                 }
@@ -283,6 +298,7 @@ class DemoApp {
 
         this.ELS.popups.kernel.apply.onclick = () => {
             this.hidePopup(this.ELS.popups.kernel.popup);
+            console.log(this.kernel.matrix + '');
             this.kernel.matrix.run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
                 .then(result => this.do(() => this.renderImage(this.ELS.input, result)))
                 .catch(err => alert(err));
@@ -330,6 +346,7 @@ class DemoApp {
         };
 
         this.ELS.imageInput.onchange = () => {
+            this.ELS.grayscale.disabled = false;
             this.ELS.sobel.disabled = false;
             Object.keys(this.ELS.popups).forEach(name => {
                 const els = (this.ELS.popups as any)[name] as { [key: string]: HTMLElement };
