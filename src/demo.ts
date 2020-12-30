@@ -2,10 +2,9 @@ import { Bitmap, Drawable } from './image';
 import { GaussianBlur, Sobel, BasicFilter } from './filter';
 import { Canny } from './feature';
 import { KMeansSegmentation } from './segmentation';
-import { Matrix } from './matrix';
 import { random } from './util';
 
-const CANVAS_SIZE = 700;
+const CANVAS_SIZE = 800;
 
 class DemoApp {
 
