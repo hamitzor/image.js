@@ -68,6 +68,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Represents K-Means segmentation on images.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -98,7 +105,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="segmentation.kmeanssegmentation-1.html#run" class="tsd-kind-icon">run</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="segmentation.kmeanssegmentation-1.html#setopts" class="tsd-kind-icon">set<wbr>Opts</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="segmentation.kmeanssegmentation-1.html#updatekmeans" class="tsd-kind-icon">update<wbr>Kmeans</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="segmentation.kmeanssegmentation-1.html#updatekmeans" class="tsd-kind-icon">update<wbr>Kmeans</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,13 +123,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in segmentation.ts:25</li>
+									<li>Defined in segmentation.ts:43</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a K-Means segmentation object.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> opts: <a href="../interfaces/segmentation.kmeanssegmentation.opts.html" class="tsd-signature-type" data-tsd-kind="Interface">Opts</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The options.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="segmentation.kmeanssegmentation-1.html" class="tsd-signature-type" data-tsd-kind="Class">KMeansSegmentation</a></h4>
@@ -138,9 +153,18 @@
 					<div class="tsd-signature tsd-kind-icon">kmeans<span class="tsd-signature-symbol">:</span> <a href="k_means.kmeans-1.html" class="tsd-signature-type" data-tsd-kind="Class">KMeans</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in segmentation.ts:25</li>
+							<li>Defined in segmentation.ts:43</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The actual Kmeans clustering object that performs segmentation.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>internal</dt>
+							<dd></dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="opts" class="tsd-anchor"></a>
@@ -148,9 +172,18 @@
 					<div class="tsd-signature tsd-kind-icon">opts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Required</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/segmentation.kmeanssegmentation.opts.html" class="tsd-signature-type" data-tsd-kind="Interface">Opts</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in segmentation.ts:24</li>
+							<li>Defined in segmentation.ts:38</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The options.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>internal</dt>
+							<dd></dd>
+						</dl>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -165,16 +198,26 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in segmentation.ts:46</li>
+									<li>Defined in segmentation.ts:82</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Start segmentation. This method does not mutate the source image.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>source: <a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Source image</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A promise that is resolved with the resulting image.
+							(single channel if <code>byIntensity</code> is set in <a href="../interfaces/segmentation.kmeanssegmentation.opts.html">KMeansSegmentation.Opts</a>)</p>
 						</li>
 					</ul>
 				</section>
@@ -188,32 +231,49 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in segmentation.ts:41</li>
+									<li>Defined in segmentation.ts:71</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Update options.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>opts: <a href="../interfaces/segmentation.kmeanssegmentation.opts.html" class="tsd-signature-type" data-tsd-kind="Interface">Opts</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The new options.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="updatekmeans" class="tsd-anchor"></a>
-					<h3>update<wbr>Kmeans</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> update<wbr>Kmeans</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
 						<li class="tsd-signature tsd-kind-icon">update<wbr>Kmeans<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in segmentation.ts:34</li>
+									<li>Defined in segmentation.ts:60</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Update KMeans clustering object according to the current options.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>internal</dt>
+									<dd></dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -271,13 +331,16 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="segmentation.kmeanssegmentation-1.html#setopts" class="tsd-kind-icon">set<wbr>Opts</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="segmentation.kmeanssegmentation-1.html#updatekmeans" class="tsd-kind-icon">update<wbr>Kmeans</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="segmentation.kmeanssegmentationbitmap.html" class="tsd-kind-icon">KMeans<wbr>Segmentation<wbr>Bitmap</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -298,10 +361,11 @@
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 		</div>
 	</div>

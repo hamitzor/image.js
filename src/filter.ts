@@ -9,10 +9,10 @@ import { gaussian } from './util';
 export class BasicFilter extends Matrix<number> {
 
     /**
-    * Start doing the convolution. This method doesn't mutate the source image.
-    * @param source - Source image
-    * @returns - A promise that is resolved with the resulting image. (with original channel count)
-    */
+     * Start doing the convolution. This method doesn't mutate the source image.
+     * @param source - Source image
+     * @returns A promise that is resolved with the resulting image. (with original channel count)
+     */
     run(source: Bitmap): Promise<Bitmap> {
         return new Promise((resolve, reject) => {
             try {
@@ -48,11 +48,13 @@ export class BasicFilter extends Matrix<number> {
 export class GaussianBlur {
     /**
      * The options.
+     * @internal
      */
     private opts: Required<GaussianBlur.Opts> = { sigma: 1, n: 5 };
 
     /**
      * The actual filter instance that performs convolution.
+     * @internal
      */
     private filter: BasicFilter;
 
@@ -114,7 +116,7 @@ export class GaussianBlur {
     /**
      * Do a convolution and return the result. This method does not mutate the original image.
      * @param source - Source image.
-     * @returns - A promise that resolves with resulting image (with original channel count).
+     * @returns A promise that resolves with resulting image (with original channel count).
      */
     run(source: Bitmap) {
         return this.filter.run(source);
@@ -143,6 +145,7 @@ export namespace GaussianBlur {
 export class Sobel {
     /**
      * The the kernel that estimates horizontal gradient. Transpose of this used to estimate the vertical gradient.
+     * @internal
      */
     private dxFilter: BasicFilter;
 
@@ -158,7 +161,7 @@ export class Sobel {
     }
 
     /**
-     * Run the filter.
+     * Run the filter This method does not mutate the source image.
      * @param source - The source image.
      * @returns A promise that resolves with the resulting image (with single channel).
      */

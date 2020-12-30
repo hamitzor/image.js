@@ -71,6 +71,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Represents options for K-Means segmentation on images.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -101,9 +108,15 @@
 					<div class="tsd-signature tsd-kind-icon">by<wbr>Intensity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in segmentation.ts:72</li>
+							<li>Defined in segmentation.ts:120</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Specifies whether use intensity (treat as grayscale) or the actual RGB values for doing segmentation when
+							the image is RGB colored.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="colors" class="tsd-anchor"></a>
@@ -111,9 +124,16 @@
 					<div class="tsd-signature tsd-kind-icon">colors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in segmentation.ts:71</li>
+							<li>Defined in segmentation.ts:115</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Segment count. It is named colors, because it can also be used to directly specify the output color of the segments.
+								To specify colors, provide an array that contains colors as array of RGB values, e.g <code>[[0,0,0], [100,100,100]]</code>.
+							If only a number is supplied, then the colors will be derived from the mean of the segments. (Can be used to reduce the bit-dept)</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Bitmap | image.js</title>
+	<title>KMeansSegmentationBitmap | image.js</title>
 	<meta name="description" content="Documentation for image.js">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">image.js</a>
 				</li>
 				<li>
-					<a href="../modules/image.html">image</a>
+					<a href="../modules/segmentation.html">segmentation</a>
 				</li>
 				<li>
-					<a href="image.bitmap.html">Bitmap</a>
+					<a href="segmentation.kmeanssegmentationbitmap.html">KMeansSegmentationBitmap</a>
 				</li>
 			</ul>
-			<h1>Class Bitmap</h1>
+			<h1>Class KMeansSegmentationBitmap</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Represents a bitmap image with arbitrary channels.</p>
+						<p>A class that makes <a href="image.bitmap.html">Bitmap</a>s usable as input of K-Means by implementing <a href="../interfaces/k_means.kmeans.samples.html">KMeans.Samples</a>.</p>
 					</div>
 				</div>
 			</section>
@@ -79,10 +79,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Bitmap</span>
+						<a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="segmentation.kmeanssegmentationbitmap.html" class="tsd-signature-type" data-tsd-kind="Class">KMeansSegmentationBitmap</a>
+								<span class="target">KMeansSegmentationBitmap</span>
 							</li>
 						</ul>
 					</li>
@@ -91,7 +91,7 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/image.drawable.html" class="tsd-signature-type" data-tsd-kind="Interface">Drawable</a></li>
+					<li><a href="../interfaces/k_means.kmeans.samples.html" class="tsd-signature-type" data-tsd-kind="Interface">Samples</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -101,29 +101,36 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="image.bitmap.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="image.bitmap.html#channelnumber" class="tsd-kind-icon">channel<wbr>Number</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="image.bitmap.html#height" class="tsd-kind-icon">height</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="image.bitmap.html#pixels" class="tsd-kind-icon">pixels</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="image.bitmap.html#width" class="tsd-kind-icon">width</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#channelnumber" class="tsd-kind-icon">channel<wbr>Number</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#height" class="tsd-kind-icon">height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#pixels" class="tsd-kind-icon">pixels</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#width" class="tsd-kind-icon">width</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="segmentation.kmeanssegmentationbitmap.html#dimensionnumber" class="tsd-kind-icon">dimension<wbr>Number</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="segmentation.kmeanssegmentationbitmap.html#length" class="tsd-kind-icon">length</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="image.bitmap.html#clone" class="tsd-kind-icon">clone</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="image.bitmap.html#get" class="tsd-kind-icon">get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="image.bitmap.html#max" class="tsd-kind-icon">max</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="image.bitmap.html#set" class="tsd-kind-icon">set</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="image.bitmap.html#tograyscale" class="tsd-kind-icon">to<wbr>Gray<wbr>Scale</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="image.bitmap.html#toimagedata" class="tsd-kind-icon">to<wbr>Image<wbr>Data</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="image.bitmap.html#tomultichannel" class="tsd-kind-icon">to<wbr>Multi<wbr>Channel</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="image.bitmap.html#fromimagedata" class="tsd-kind-icon">from<wbr>Image<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#clone" class="tsd-kind-icon">clone</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="segmentation.kmeanssegmentationbitmap.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#max" class="tsd-kind-icon">max</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#set" class="tsd-kind-icon">set</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#tograyscale" class="tsd-kind-icon">to<wbr>Gray<wbr>Scale</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#toimagedata" class="tsd-kind-icon">to<wbr>Image<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="segmentation.kmeanssegmentationbitmap.html#tomultichannel" class="tsd-kind-icon">to<wbr>Multi<wbr>Channel</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="segmentation.kmeanssegmentationbitmap.html#fromimagedata" class="tsd-kind-icon">from<wbr>Image<wbr>Data</a></li>
 							</ul>
 						</section>
 					</div>
@@ -131,64 +138,47 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Bitmap<span class="tsd-signature-symbol">(</span>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, channelNumber<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, fill<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">new KMeans<wbr>Segmentation<wbr>Bitmap<span class="tsd-signature-symbol">(</span>image<span class="tsd-signature-symbol">: </span><a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="segmentation.kmeanssegmentationbitmap.html" class="tsd-signature-type" data-tsd-kind="Class">KMeansSegmentationBitmap</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in image.ts:35</li>
+									<li>Defined in segmentation.ts:8</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Create a bitmap image.</p>
+									<p>Construct an samples object that can be used as input of K-Means.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>width: <span class="tsd-signature-type">number</span></h5>
+									<h5>image: <a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Width of the image in pixels.</p>
-									</div>
-								</li>
-								<li>
-									<h5>height: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Height of the image in pixels.</p>
-									</div>
-								</li>
-								<li>
-									<h5>channelNumber: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Channel count of the image, default is 1 (grayscale).</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> fill: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A value to fill the image (in all channels), or an array that holds
-										consecutive pixel data with consecutive channel values. If omitted, 0 will be used.</p>
+										<p>The original image.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="segmentation.kmeanssegmentationbitmap.html" class="tsd-signature-type" data-tsd-kind="Class">KMeansSegmentationBitmap</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="channelnumber" class="tsd-anchor"></a>
 					<h3>channel<wbr>Number</h3>
 					<div class="tsd-signature tsd-kind-icon">channel<wbr>Number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#channelnumber">channelNumber</a></p>
 						<ul>
 							<li>Defined in image.ts:25</li>
 						</ul>
@@ -199,11 +189,12 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="height" class="tsd-anchor"></a>
 					<h3>height</h3>
 					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#height">height</a></p>
 						<ul>
 							<li>Defined in image.ts:35</li>
 						</ul>
@@ -214,11 +205,12 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="pixels" class="tsd-anchor"></a>
 					<h3>pixels</h3>
 					<div class="tsd-signature tsd-kind-icon">pixels<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#pixels">pixels</a></p>
 						<ul>
 							<li>Defined in image.ts:20</li>
 						</ul>
@@ -229,11 +221,12 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="width" class="tsd-anchor"></a>
 					<h3>width</h3>
 					<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#width">width</a></p>
 						<ul>
 							<li>Defined in image.ts:30</li>
 						</ul>
@@ -246,16 +239,54 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="dimensionnumber" class="tsd-anchor"></a>
+					<h3>dimension<wbr>Number</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> dimensionNumber<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in segmentation.ts:25</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="length" class="tsd-anchor"></a>
+					<h3>length</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> length<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in segmentation.ts:22</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="clone" class="tsd-anchor"></a>
 					<h3>clone</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#clone">clone</a></p>
 								<ul>
 									<li>Defined in image.ts:135</li>
 								</ul>
@@ -270,59 +301,44 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="get" class="tsd-anchor"></a>
 					<h3>get</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>i<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, j<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, channelIdx<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, dimension<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/k_means.kmeans.samples.html">Samples</a>.<a href="../interfaces/k_means.kmeans.samples.html#get">get</a></p>
+								<p>Overrides <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#get">get</a></p>
 								<ul>
-									<li>Defined in image.ts:98</li>
+									<li>Defined in segmentation.ts:18</li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get the channel value of a pixel at a given position.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>i: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The row of the pixel.</p>
-									</div>
+									<h5>idx: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
-									<h5>j: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The column of the pixel.</p>
-									</div>
-								</li>
-								<li>
-									<h5>channelIdx: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The channel number.</p>
-									</div>
+									<h5>dimension: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-							<p>The channel value.</p>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="max" class="tsd-anchor"></a>
 					<h3>max</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">max<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#max">max</a></p>
 								<ul>
 									<li>Defined in image.ts:87</li>
 								</ul>
@@ -337,15 +353,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="set" class="tsd-anchor"></a>
 					<h3>set</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">(</span>i<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, j<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, channelIdx<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#set">set</a></p>
 								<ul>
 									<li>Defined in image.ts:109</li>
 								</ul>
@@ -386,15 +403,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="tograyscale" class="tsd-anchor"></a>
 					<h3>to<wbr>Gray<wbr>Scale</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">to<wbr>Gray<wbr>Scale<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#tograyscale">toGrayScale</a></p>
 								<ul>
 									<li>Defined in image.ts:143</li>
 								</ul>
@@ -409,16 +427,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="toimagedata" class="tsd-anchor"></a>
 					<h3>to<wbr>Image<wbr>Data</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">to<wbr>Image<wbr>Data<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ImageData</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/image.drawable.html">Drawable</a>.<a href="../interfaces/image.drawable.html#toimagedata">toImageData</a></p>
+								<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#toimagedata">toImageData</a></p>
 								<ul>
 									<li>Defined in image.ts:117</li>
 								</ul>
@@ -433,15 +451,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="tomultichannel" class="tsd-anchor"></a>
 					<h3>to<wbr>Multi<wbr>Channel</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">to<wbr>Multi<wbr>Channel<span class="tsd-signature-symbol">(</span>channelNumber<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#tomultichannel">toMultiChannel</a></p>
 								<ul>
 									<li>Defined in image.ts:162</li>
 								</ul>
@@ -462,15 +481,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
 					<a name="fromimagedata" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> from<wbr>Image<wbr>Data</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
 						<li class="tsd-signature tsd-kind-icon">from<wbr>Image<wbr>Data<span class="tsd-signature-symbol">(</span>imageData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ImageData</span>, channelNumber<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="image.bitmap.html" class="tsd-signature-type" data-tsd-kind="Class">Bitmap</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="image.bitmap.html">Bitmap</a>.<a href="image.bitmap.html#fromimagedata">fromImageData</a></p>
 								<ul>
 									<li>Defined in image.ts:65</li>
 								</ul>
@@ -514,7 +534,7 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/filter.html">filter</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/image.html">image</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -523,7 +543,7 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/matrix.html">matrix</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/segmentation.html">segmentation</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -533,57 +553,63 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="segmentation.kmeanssegmentation-1.html" class="tsd-kind-icon">KMeans<wbr>Segmentation</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="image.bitmap.html" class="tsd-kind-icon">Bitmap</a>
+						<a href="segmentation.kmeanssegmentationbitmap.html" class="tsd-kind-icon">KMeans<wbr>Segmentation<wbr>Bitmap</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="image.bitmap.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="image.bitmap.html#channelnumber" class="tsd-kind-icon">channel<wbr>Number</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#channelnumber" class="tsd-kind-icon">channel<wbr>Number</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="image.bitmap.html#height" class="tsd-kind-icon">height</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#height" class="tsd-kind-icon">height</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="image.bitmap.html#pixels" class="tsd-kind-icon">pixels</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#pixels" class="tsd-kind-icon">pixels</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="image.bitmap.html#width" class="tsd-kind-icon">width</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#width" class="tsd-kind-icon">width</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="image.bitmap.html#clone" class="tsd-kind-icon">clone</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="segmentation.kmeanssegmentationbitmap.html#dimensionnumber" class="tsd-kind-icon">dimension<wbr>Number</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="image.bitmap.html#get" class="tsd-kind-icon">get</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="segmentation.kmeanssegmentationbitmap.html#length" class="tsd-kind-icon">length</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="image.bitmap.html#max" class="tsd-kind-icon">max</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#clone" class="tsd-kind-icon">clone</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="image.bitmap.html#set" class="tsd-kind-icon">set</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="segmentation.kmeanssegmentationbitmap.html#get" class="tsd-kind-icon">get</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="image.bitmap.html#tograyscale" class="tsd-kind-icon">to<wbr>Gray<wbr>Scale</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#max" class="tsd-kind-icon">max</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="image.bitmap.html#toimagedata" class="tsd-kind-icon">to<wbr>Image<wbr>Data</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#set" class="tsd-kind-icon">set</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="image.bitmap.html#tomultichannel" class="tsd-kind-icon">to<wbr>Multi<wbr>Channel</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#tograyscale" class="tsd-kind-icon">to<wbr>Gray<wbr>Scale</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="image.bitmap.html#fromimagedata" class="tsd-kind-icon">from<wbr>Image<wbr>Data</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#toimagedata" class="tsd-kind-icon">to<wbr>Image<wbr>Data</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="segmentation.kmeanssegmentationbitmap.html#tomultichannel" class="tsd-kind-icon">to<wbr>Multi<wbr>Channel</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="segmentation.kmeanssegmentationbitmap.html#fromimagedata" class="tsd-kind-icon">from<wbr>Image<wbr>Data</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/image.drawable.html" class="tsd-kind-icon">Drawable</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -596,9 +622,12 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
@@ -606,9 +635,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>

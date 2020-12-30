@@ -71,6 +71,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Represents options for canny edge detection.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -102,9 +109,14 @@
 					<div class="tsd-signature tsd-kind-icon">gaussian<wbr>Blur<wbr>Opts<span class="tsd-signature-symbol">:</span> <a href="filter.gaussianblur.opts.html" class="tsd-signature-type" data-tsd-kind="Interface">Opts</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in feature.ts:122</li>
+							<li>Defined in feature.ts:181</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Options for gaussian blurring that is performed before starting edge detection.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="highthresholdratio" class="tsd-anchor"></a>
@@ -112,9 +124,15 @@
 					<div class="tsd-signature tsd-kind-icon">high<wbr>Threshold<wbr>Ratio<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in feature.ts:121</li>
+							<li>Defined in feature.ts:177</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A value that is used to determine high threshold value while performing thresholding.
+							The formula: <code>High Threshold Value = Maximum Pixel Value in the Source Image x High Threshold Ratio</code></p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="lowthresholdratio" class="tsd-anchor"></a>
@@ -122,9 +140,15 @@
 					<div class="tsd-signature tsd-kind-icon">low<wbr>Threshold<wbr>Ratio<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in feature.ts:120</li>
+							<li>Defined in feature.ts:172</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A value that is used to determine low threshold value while performing thresholding.
+							The formula: <code>Low Threshold Value = High Threshold Value x Low Threshold Ratio</code></p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>

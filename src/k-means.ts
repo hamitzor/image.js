@@ -1,24 +1,48 @@
 import { random } from './util';
 
+/**
+ * Represents a K-Means clustering.
+ */
 export class KMeans {
 
-    public opts = { maxIterations: 0, clusterNumber: 2 };
+    /**
+     * The options.
+     * @internal
+     */
+    private opts = { maxIterations: 0, clusterNumber: 2 };
 
+    /**
+     * Create a K-Means clustering object.
+     * @param opts - The options.
+     */
     constructor(opts?: KMeans.Opts) {
         if (opts) {
             this.setOpts(opts);
         }
     }
 
+    /**
+     * Update options.
+     * @param opts - The new options.
+     */
     setOpts(opts: KMeans.Opts) {
         this.opts = Object.assign(this.opts, opts);
     }
 
-    run(samples: KMeans.Samples) {
+    /**
+     * Start clustering.
+     * @param samples - The samples.
+     * @returns An object with two fields:
+     *  - `clusters`: an array that holds cluster index for each sample.
+     *  - `centroids`: an array that holds the centroid of each cluster.
+     */
+    run(samples: KMeans.Samples): Promise<{ clusters: number[], centroids: number[][] }> {
         return new Promise((resolve, reject) => {
             try {
+                // Initialize the centroids with 0.
                 const centroids: number[][] = Array.from({ length: this.opts.clusterNumber },
                     () => new Array(samples.dimensionNumber).fill(0));
+                // An array holds the cluster index of each sample. All points belong to the first cluster at the beginning.
                 const sampleClusterIdxes: number[] = new Array(samples.length).fill(0);
                 let numberOfIterations = 0;
                 let centroidsDoNotChangeFor = 0;
@@ -26,6 +50,7 @@ export class KMeans {
 
                 const randomCentroids: number[][] = [];
 
+                // Determine unique centroids.
                 while (randomCentroids.length < this.opts.clusterNumber) {
                     const randIdx = random(samples.length - 1);
                     if (
@@ -114,14 +139,35 @@ export class KMeans {
 
 export namespace KMeans {
 
+    /**
+     * Represents options for K-Means.
+     */
     export interface Opts {
+        /**
+         * The number maximum iterations. When it is exceeded, algorithm stops immediately.
+         */
         maxIterations?: number;
+        /**
+         * The number clusters.
+         */
         clusterNumber?: number;
     }
 
+    /**
+     * Represents the input of a K-Means algorithm. All inputs shall implement this interface.
+     */
     export interface Samples {
+        /**
+         * The number of samples.
+         */
         readonly length: number;
+        /**
+         * The dimension of the samples.
+         */
         readonly dimensionNumber: number;
+        /**
+         * A getter method that returns i-th sample's value in `dimension`-th dimension.
+         */
         get(idx: number, dimension: number): number;
     }
 }
