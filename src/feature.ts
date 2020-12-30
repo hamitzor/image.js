@@ -24,6 +24,12 @@ export class Canny {
             delete opts.gaussianBlurOpts;
         }
         this.opts = Object.assign(this.opts, opts);
+        if (typeof this.opts.lowThresholdRatio !== 'number' || typeof this.opts.highThresholdRatio !== 'number') {
+            throw new Error('High and low threshold values should be real numbers between 0 and 1');
+        }
+        if (this.opts.lowThresholdRatio >= this.opts.highThresholdRatio) {
+            throw new Error('Low threshold value should be smaller than high threshold value.');
+        }
     }
 
     private nonMaximumSuppression(g: Bitmap, theta: Bitmap) {
@@ -99,12 +105,13 @@ export class Canny {
     }
 
     run(source: Bitmap) {
-        const { g, theta } = new Sobel().run(new GaussianBlur(this.opts.gaussianBlurOpts).run(source));
-
-        const highThreshold = source.max() * this.opts.highThresholdRatio;
-        const lowThreshold = highThreshold * this.opts.lowThresholdRatio;
-
-        return this.hysteresis(this.threshold(this.nonMaximumSuppression(g, theta), lowThreshold, highThreshold));
+        return new GaussianBlur(this.opts.gaussianBlurOpts).run(source)
+            .then(res => new Sobel().run(res))
+            .then(({ g, theta }) => {
+                const highThreshold = source.max() * this.opts.highThresholdRatio;
+                const lowThreshold = highThreshold * this.opts.lowThresholdRatio;
+                return this.hysteresis(this.threshold(this.nonMaximumSuppression(g, theta), lowThreshold, highThreshold));
+            });
     }
 }
 

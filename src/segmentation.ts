@@ -22,39 +22,47 @@ class KMeansSegmentationBitmap extends Bitmap implements KMeans.Samples {
 export class KMeansSegmentation {
 
     private opts: Required<KMeansSegmentation.Opts> = { byIntensity: false, colors: 3 };
+    private kmeans: KMeans;
 
     constructor(opts?: KMeansSegmentation.Opts) {
         if (opts) {
             this.setOpts(opts);
         }
+        this.updateKmeans();
+    }
+
+    updateKmeans() {
+        this.kmeans = new KMeans({
+            clusterNumber: Array.isArray(this.opts.colors) ? this.opts.colors.length : this.opts.colors,
+            maxIterations: 50
+        });
     }
 
     setOpts(opts: KMeansSegmentation.Opts) {
         this.opts = Object.assign(this.opts, opts);
+        this.updateKmeans();
     }
 
     run(source: Bitmap) {
         const samples = new KMeansSegmentationBitmap(this.opts.byIntensity ? source.toGrayScale() : source);
-        const kmeans = new KMeans(samples,
-            { clusterNumber: Array.isArray(this.opts.colors) ? this.opts.colors.length : this.opts.colors, maxIterations: 50 });
-        const { clusters, centroids } = kmeans.run();
+        return this.kmeans.run(samples).then(({ clusters, centroids }) => {
+            const result = this.opts.byIntensity ? samples.toMultiChannel(3) : samples;
 
-        const result = this.opts.byIntensity ? samples.toMultiChannel(3) : samples;
-
-        if (!Array.isArray(this.opts.colors)) {
-            for (let i = 0; i < result.width * result.height; i++) {
-                result.pixels[i * 3] = centroids[clusters[i]][0];
-                result.pixels[i * 3 + 1] = centroids[clusters[i]][this.opts.byIntensity ? 0 : 1];
-                result.pixels[i * 3 + 2] = centroids[clusters[i]][this.opts.byIntensity ? 0 : 2];
+            if (!Array.isArray(this.opts.colors)) {
+                for (let i = 0; i < result.width * result.height; i++) {
+                    result.pixels[i * 3] = centroids[clusters[i]][0];
+                    result.pixels[i * 3 + 1] = centroids[clusters[i]][this.opts.byIntensity ? 0 : 1];
+                    result.pixels[i * 3 + 2] = centroids[clusters[i]][this.opts.byIntensity ? 0 : 2];
+                }
+            } else {
+                for (let i = 0; i < result.width * result.height; i++) {
+                    result.pixels[i * 3] = this.opts.colors[clusters[i]][0];
+                    result.pixels[i * 3 + 1] = this.opts.colors[clusters[i]][1];
+                    result.pixels[i * 3 + 2] = this.opts.colors[clusters[i]][2];
+                }
             }
-        } else {
-            for (let i = 0; i < result.width * result.height; i++) {
-                result.pixels[i * 3] = this.opts.colors[clusters[i]][0];
-                result.pixels[i * 3 + 1] = this.opts.colors[clusters[i]][1];
-                result.pixels[i * 3 + 2] = this.opts.colors[clusters[i]][2];
-            }
-        }
-        return result;
+            return result;
+        });
     }
 }
 

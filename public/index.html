@@ -11,31 +11,152 @@
 </head>
 
 <body>
+    <div id="overlay" class="position-absolute d-flex align-items-center justify-content-center"
+        style="background-color: rgba(0, 0, 0, 0.397); z-index: 100; top: 0; bottom: 0; left: 0; right: 0;">
+
+        <div id="kernelPopup" class="card">
+            <h5 class="card-header">Apply a kernel</h5>
+            <div class="card-body">
+                <div class="input-group">
+                    <span class="input-group-text">Kernel Size</span>
+                    <input id="kernelOptionsSize" type="number" class="form-control" value="3">
+                </div>
+
+                <div class="d-flex justify-content-center mt-4 ">
+                    <div class="left-bracket"></div>
+                    <div id="kernelOptionsMatrix" class="matrix d-flex align-items-center flex-column">
+
+                    </div>
+                    <div class="right-bracket"></div>
+                </div>
+
+                <div id="kernelError" class="alert alert-danger mt-3" role="alert">
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <button id="kernelCancel" class="btn btn-danger">Cancel</button>
+                <button id="kernelApply" class="btn btn-success">Apply</button>
+            </div>
+        </div>
+
+        <div id="gaussPopup" class="card">
+            <h5 class="card-header">Apply Gaussian blur</h5>
+            <div class="card-body">
+                <div class="input-group">
+                    <span class="input-group-text">Size</span>
+                    <input id="gaussSize" type="number" class="form-control" value="5">
+                </div>
+                <div class="input-group mt-2">
+                    <span class="input-group-text">Sigma</span>
+                    <input id="gaussSigma" type="number" class="form-control" value="1.0" value="0.2">
+                </div>
+
+                <div id="gaussError" class="alert alert-danger mt-3" role="alert">
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <button id="gaussCancel" class="btn btn-danger">Cancel</button>
+                <button id="gaussApply" class="btn btn-success">Apply</button>
+            </div>
+        </div>
+
+        <div id="cannyPopup" class="card">
+            <h5 class="card-header">Detect edges with Canny</h5>
+            <div class="card-body">
+                <div class="input-group">
+                    <span class="input-group-text">Low Thresh Value</span>
+                    <input id="cannyLow" type="number" class="form-control" value="0.2" step="0.05">
+                </div>
+
+                <div class="input-group mt-2">
+                    <span class="input-group-text">High Thresh Value</span>
+                    <input id="cannyHigh" type="number" class="form-control" value="0.45" step="0.05" >
+                </div>
+
+                <div class="input-group mt-2">
+                    <span class="input-group-text">Pre-Gaussian Blur Size</span>
+                    <input id="cannyGaussSize" type="number" class="form-control" value="5">
+                </div>
+
+                <div class="input-group mt-2">
+                    <span class="input-group-text">Pre-Gaussian Blur Sigma</span>
+                    <input id="cannyGaussSigma" type="number" class="form-control" value="1.0" step="0.2">
+                </div>
+
+                <div id="cannyError" class="alert alert-danger mt-3" role="alert">
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <button id="cannyCancel" class="btn btn-danger">Cancel</button>
+                <button id="cannyApply" class="btn btn-success">Apply</button>
+            </div>
+        </div>
+
+        <div id="segmentPopup" class="card">
+            <h5 class="card-header">Do segmentation by K-Means</h5>
+            <div class="card-body">
+                <div class="input-group">
+                    <span class="input-group-text">Segment Number</span>
+                    <input id="segmentNumber" type="number" class="form-control" value="3">
+                </div>
+                <div class="input-group mt-2">
+                    <span class="input-group-text">Segmentation by: </span>
+                    <div class="d-flex align-items-center">
+                        <div class="form-check ml-2">
+                            <input class="form-check-input" type="radio" value="rgb" name="segmentBy" checked id="segmentRGB">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                RGB value
+                            </label>
+                        </div>
+                        <div class="form-check ml-2">
+                            <input class="form-check-input" type="radio" value="intensity" name="segmentBy" id="segmentIntensity">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Intensity
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="segmentError" class="alert alert-danger mt-3" role="alert">
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <button id="segmentCancel" class="btn btn-danger">Cancel</button>
+                <button id="segmentApply" class="btn btn-success">Apply</button>
+            </div>
+        </div>
+
+        <div id="compressPopup" class="card">
+            <h5 class="card-header">Do compression with K-Means</h5>
+            <div class="card-body">
+                <div class="input-group">
+                    <span class="input-group-text">Color Depth</span>
+                    <input id="compressDepth" type="number" class="form-control" value="4">
+                </div>
+                <div id="compressError" class="alert alert-danger mt-3" role="alert">
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <button id="compressCancel" class="btn btn-danger">Cancel</button>
+                <button id="compressApply" class="btn btn-success">Apply</button>
+            </div>
+        </div>
+
+    </div>
+
     <div id="app">
         <div class="container-fluid pt-4">
             <div class="toolbar d-flex">
                 <input id="imageInput" style="display: none" accept="image/x-png,image/jpeg" type="file"></input>
                 <button id="loadImage" class="btn btn-primary">Open</button>
-                <button id="kmeans" class="btn btn-primary ml-3" type="button">
-                    K-Means Segmentation
-                </button>
-                <button id="sobelOperator" class="btn btn-primary ml-3" type="button">
-                    Sobel Operator
-                </button>
-                <button id="gaussianBlur" class="btn btn-primary ml-3" type="button">
-                    Gaussian Blur
-                </button>
-                <button id="canny" class="btn btn-primary ml-3" type="button">
-                    Canny Edge Detection
-                </button>
-                <label for="cannyLow">Canny Threshold Low</label>
-                <input id="cannyLow" type="number" value="0.2">
-                <label for="cannyHigh">Canny Threshold High</label>
-                <input id="cannyHigh" type="number" value="0.5">
+                <button id="kernelOpen" class="btn btn-primary ml-2" disabled>Apply Filter</button>
+                <button id="gaussOpen" class="btn btn-primary ml-2" disabled>Gaussian Blur</button>
+                <button id="sobel" class="btn btn-primary ml-2" disabled>Sobel</button>
+                <button id="cannyOpen" class="btn btn-primary ml-2" disabled>Canny</button>
+                <button id="segmentOpen" class="btn btn-primary ml-2" disabled>Segmentation</button>
+                <button id="compressOpen" class="btn btn-primary ml-2" disabled>Compress</button>
             </div>
-            <div class="mt-3">
+            <div class="mt-3 d-flex align-items-center justify-content-center">
                 <canvas id="input"></canvas>
-                <canvas class="ml-5" id="output"></canvas>
             </div>
         </div>
     </div>

@@ -1,0 +1,27 @@
+.matrix input{
+    width: 40px;
+    height: 40px;
+    border: none;
+    margin: 2px;
+    padding: 0;
+}
+
+.matrix input:active{
+    outline: none;
+}
+
+.left-bracket{
+    width: 10px;
+    border: 3px solid rgb(95, 95, 95);
+    border-right: none;
+}
+
+.right-bracket{
+    width: 10px;
+    border: 3px solid rgb(95, 95, 95);
+    border-left: none;
+}
+
+.hidden{
+    display: none!important;
+}
