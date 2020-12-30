@@ -292,6 +292,7 @@ class DemoApp {
 
         this.ELS.popups.segment.apply.onclick = () => {
             this.hidePopup(this.ELS.popups.segment.popup);
+            onSegmentChange();
             this.segmentation.run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
                 .then(result => this.do(() => this.renderImage(this.ELS.input, result)))
                 .catch(err => alert(err));
