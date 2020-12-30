@@ -14,12 +14,8 @@ class DemoApp {
         input: document.getElementById('input') as HTMLCanvasElement,
         imageInput: document.getElementById('imageInput') as HTMLInputElement,
         loadImage: document.getElementById('loadImage') as HTMLButtonElement,
-        gaussianBlur: document.getElementById('gaussianBlur') as HTMLAnchorElement,
-        sobelOperator: document.getElementById('sobelOperator') as HTMLAnchorElement,
-        canny: document.getElementById('canny') as HTMLAnchorElement,
-        cannyLow: document.getElementById('cannyLow') as HTMLInputElement,
-        cannyHigh: document.getElementById('cannyHigh') as HTMLInputElement,
-        kmeans: document.getElementById('kmeans') as HTMLAnchorElement,
+        undo: document.getElementById('undo') as HTMLButtonElement,
+        redo: document.getElementById('redo') as HTMLButtonElement,
         sobel: document.getElementById('sobel') as HTMLButtonElement,
         popups: {
             kernel: {
@@ -88,6 +84,9 @@ class DemoApp {
 
     compression = new KMeansSegmentation();
 
+    history: Bitmap[] = [];
+    historyIndex: number;
+
     private createElement(html: string): ChildNode {
         const div = document.createElement('div');
         div.innerHTML = html.trim();
@@ -122,6 +121,21 @@ class DemoApp {
             this.hide(els.error);
             els.open.onclick = () => this.showPopup(els.popup);
             els.cancel.onclick = () => this.hidePopup(els.popup);
+        });
+
+        this.ELS.undo.onclick = () => this.undo();
+        this.ELS.redo.onclick = () => this.redo();
+
+        document.addEventListener('keydown', event => {
+            if (event.ctrlKey && event.key === 'z') {
+                this.undo();
+            }
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.ctrlKey && event.key === 'y') {
+                this.redo();
+            }
         });
 
         const onGaussChange = () => {
@@ -256,21 +270,21 @@ class DemoApp {
         this.ELS.popups.compress.apply.onclick = () => {
             this.hidePopup(this.ELS.popups.compress.popup);
             this.compression.run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
-                .then(result => this.renderImage(this.ELS.input, result))
+                .then(result => this.do(() => this.renderImage(this.ELS.input, result)))
                 .catch(err => alert(err));
         };
 
         this.ELS.popups.segment.apply.onclick = () => {
             this.hidePopup(this.ELS.popups.segment.popup);
             this.segmentation.run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
-                .then(result => this.renderImage(this.ELS.input, result))
+                .then(result => this.do(() => this.renderImage(this.ELS.input, result)))
                 .catch(err => alert(err));
         };
 
         this.ELS.popups.kernel.apply.onclick = () => {
             this.hidePopup(this.ELS.popups.kernel.popup);
             this.kernel.matrix.run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
-                .then(result => this.renderImage(this.ELS.input, result))
+                .then(result => this.do(() => this.renderImage(this.ELS.input, result)))
                 .catch(err => alert(err));
         };
 
@@ -278,14 +292,14 @@ class DemoApp {
             this.hidePopup(this.ELS.popups.gauss.popup);
 
             this.gauss.run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
-                .then(result => this.renderImage(this.ELS.input, result))
+                .then(result => this.do(() => this.renderImage(this.ELS.input, result)))
                 .catch(err => alert(err));
         };
 
         this.ELS.sobel.onclick = () => {
             this.hidePopup(this.ELS.popups.gauss.popup);
             new Sobel().run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
-                .then(({ g }) => this.renderImage(this.ELS.input, g))
+                .then(({ g }) => this.do(() => this.renderImage(this.ELS.input, g)))
                 .catch(err => alert(err));
         };
 
@@ -293,7 +307,7 @@ class DemoApp {
             this.hidePopup(this.ELS.popups.canny.popup);
 
             this.canny.run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
-                .then(result => this.renderImage(this.ELS.input, result))
+                .then(result => this.do(() => this.renderImage(this.ELS.input, result)))
                 .catch(err => alert(err));
         };
 
@@ -342,54 +356,52 @@ class DemoApp {
                         }
                     }
                     this.renderImage(this.ELS.input, img);
+                    this.history = [Bitmap.fromImageData(this.getImageData(this.ELS.input), 3)];
+                    this.historyIndex = 0;
                     this.ELS.imageInput.value = '';
                 };
             };
         };
+    }
 
+    private do(cb: () => void) {
+        if (this.historyIndex !== this.history.length - 1) {
+            this.history = this.history.slice(0, this.historyIndex + 1);
+        }
+        cb();
+        this.history.push(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3));
+        this.historyIndex++;
+        this.ELS.redo.disabled = true;
+        this.ELS.undo.disabled = false;
+    }
 
+    private undo() {
+        if (this.historyIndex > 0) {
+            this.historyIndex--;
+            this.renderImage(this.ELS.input, this.history[this.historyIndex]);
+            if (this.historyIndex < 1) {
+                this.ELS.undo.disabled = true;
+            }
+            if (this.historyIndex < this.history.length - 1) {
+                this.ELS.redo.disabled = false;
+            }
+        } else {
+            new Audio('/alert.mp3').play();
+        }
+    }
 
-        if (false) {
-            /*
-            this.ELS.gaussianBlur.onclick = () => {
-                this.renderImage(
-                    this.ELS.input,
-                    new GaussianBlur().run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
-                );
-            };
-
-
-            this.ELS.sobelOperator.onclick = () => {
-                this.renderImage(
-                    this.ELS.input,
-                    new Sobel().run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3)).g
-                );
-            };
-
-            this.ELS.canny.onclick = () => {
-                this.renderImage(
-                    this.ELS.input,
-                    new Canny({
-                        lowThresholdRatio: parseFloat(this.ELS.cannyLow.value),
-                        highThresholdRatio: parseFloat(this.ELS.cannyHigh.value),
-                        gaussianBlurOpts: { n: 5, sigma: 1 }
-                    }).run(Bitmap.fromImageData(this.getImageData(this.ELS.input)))
-                );
-            };
-
-            this.ELS.kmeans.onclick = () => {
-                this.renderImage(
-                    this.ELS.input,
-                    new KMeansSegmentation({
-                        colors: false ?
-                            [[212, 71, 0],
-                            [214, 237, 23],
-                            [100, 23, 181]] : 30,
-                        byIntensity: false
-                    }).run(Bitmap.fromImageData(this.getImageData(this.ELS.input), 3))
-                );
-            };
-            */
+    private redo() {
+        if (this.historyIndex < this.history.length - 1) {
+            this.historyIndex++;
+            this.renderImage(this.ELS.input, this.history[this.historyIndex]);
+            if (this.historyIndex === this.history.length - 1) {
+                this.ELS.redo.disabled = true;
+            }
+            if (this.historyIndex > 0) {
+                this.ELS.undo.disabled = false;
+            }
+        } else {
+            new Audio('/alert.mp3').play();
         }
     }
 
@@ -425,6 +437,7 @@ class DemoApp {
 
 const main = () => {
     const demo = new DemoApp();
+    (window as any).app = demo;
 };
 
 document.addEventListener('DOMContentLoaded', main);

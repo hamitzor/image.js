@@ -14,7 +14,7 @@
     <div id="overlay" class="position-absolute d-flex align-items-center justify-content-center"
         style="background-color: rgba(0, 0, 0, 0.397); z-index: 100; top: 0; bottom: 0; left: 0; right: 0;">
 
-        <div id="kernelPopup" class="card">
+        <div id="kernelPopup" class="card hidden">
             <h5 class="card-header">Apply a kernel</h5>
             <div class="card-body">
                 <div class="input-group">
@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div id="gaussPopup" class="card">
+        <div id="gaussPopup" class="card hidden">
             <h5 class="card-header">Apply Gaussian blur</h5>
             <div class="card-body">
                 <div class="input-group">
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <div id="cannyPopup" class="card">
+        <div id="cannyPopup" class="card hidden">
             <h5 class="card-header">Detect edges with Canny</h5>
             <div class="card-body">
                 <div class="input-group">
@@ -92,7 +92,7 @@
             </div>
         </div>
 
-        <div id="segmentPopup" class="card">
+        <div id="segmentPopup" class="card hidden">
             <h5 class="card-header">Do segmentation by K-Means</h5>
             <div class="card-body">
                 <div class="input-group">
@@ -125,7 +125,7 @@
             </div>
         </div>
 
-        <div id="compressPopup" class="card">
+        <div id="compressPopup" class="card hidden">
             <h5 class="card-header">Do compression with K-Means</h5>
             <div class="card-body">
                 <div class="input-group">
@@ -144,10 +144,14 @@
     </div>
 
     <div id="app">
-        <div class="container-fluid pt-4">
-            <div class="toolbar d-flex">
+        <div class="container-fluid">
+            <div class="toolbar d-flex bg-secondary p-3">
                 <input id="imageInput" style="display: none" accept="image/x-png,image/jpeg" type="file"></input>
                 <button id="loadImage" class="btn btn-primary">Open</button>
+
+                <button id="undo" class="btn btn-primary ml-2" disabled>&#x27F2;</button>
+                <button id="redo" class="btn btn-primary ml-2" disabled>&#x27F3;</button>
+
                 <button id="kernelOpen" class="btn btn-primary ml-2" disabled>Apply Filter</button>
                 <button id="gaussOpen" class="btn btn-primary ml-2" disabled>Gaussian Blur</button>
                 <button id="sobel" class="btn btn-primary ml-2" disabled>Sobel</button>
