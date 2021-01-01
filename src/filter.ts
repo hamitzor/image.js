@@ -144,7 +144,7 @@ export namespace GaussianBlur {
  */
 export class Sobel {
     /**
-     * The the kernel that estimates horizontal gradient. Transpose of this used to estimate the vertical gradient.
+     * The kernel that estimates horizontal gradient. Transpose of this used to estimate the vertical gradient.
      * @internal
      */
     private dxFilter: BasicFilter;
