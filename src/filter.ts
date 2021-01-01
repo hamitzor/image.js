@@ -161,7 +161,7 @@ export class Sobel {
     }
 
     /**
-     * Run the filter This method does not mutate the source image.
+     * Run the filter. This method does not mutate the source image.
      * @param source - The source image.
      * @returns A promise that resolves with the resulting image (with single channel).
      */
