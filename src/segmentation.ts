@@ -60,7 +60,7 @@ export class KMeansSegmentation {
     private updateKmeans() {
         this.kmeans = new KMeans({
             clusterNumber: Array.isArray(this.opts.colors) ? this.opts.colors.length : this.opts.colors,
-            maxIterations: 50
+            maxIterations: 10
         });
     }
 
