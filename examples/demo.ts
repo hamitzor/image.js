@@ -404,7 +404,7 @@ class DemoApp {
                 this.ELS.redo.disabled = false;
             }
         } else {
-            new Audio('/public/alert.mp3').play();
+            new Audio('https://mygit.th-deg.de/hz29287/image.js/-/blob/master/public/alert.mp3').play();
         }
     }
 
