@@ -404,7 +404,7 @@ class DemoApp {
                 this.ELS.redo.disabled = false;
             }
         } else {
-            new Audio('/alert.mp3').play();
+            new Audio('/public/alert.mp3').play();
         }
     }
 
