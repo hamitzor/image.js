@@ -403,8 +403,6 @@ class DemoApp {
             if (this.historyIndex < this.history.length - 1) {
                 this.ELS.redo.disabled = false;
             }
-        } else {
-            new Audio('https://mygit.th-deg.de/hz29287/image.js/-/blob/master/public/alert.mp3').play();
         }
     }
 
